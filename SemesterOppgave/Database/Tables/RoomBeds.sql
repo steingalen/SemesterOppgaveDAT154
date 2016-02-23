@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[RoomBeds]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Beds] INT NOT NULL
+)

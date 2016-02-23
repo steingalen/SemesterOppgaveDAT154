@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="ff4c7420-c410-4e41-b70a-860b9833b94b" ChangeDateTime="02/23/2016 18:38:10">
+    <Property Name="ElementName" Value="[dbo].[Room].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Room]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RoomNr" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3f161ab2-f852-44ec-ae21-1134b8586db6" ChangeDateTime="02/23/2016 18:39:14">
+    <Property Name="ElementName" Value="[dbo].[Customer].[First]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Customer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FirstName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7d3cfc05-d45b-47ff-adbe-f89cdbd98408" ChangeDateTime="02/23/2016 18:42:17">
+    <Property Name="ElementName" Value="[dbo].[Room].[RoomNr]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Room]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RoomNumber" />
+  </Operation>
+</Operations>
