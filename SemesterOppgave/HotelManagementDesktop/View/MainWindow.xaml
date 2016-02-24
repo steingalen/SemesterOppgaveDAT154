@@ -1,0 +1,32 @@
+﻿<Window x:Class="HotelManagementDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagementDesktop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ContentControl Name="MainMenu" Visibility="Visible" IsEnabled="True">
+            <Grid>
+                <Button x:Name="button" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="button_Copy" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
+            </Grid>
+        </ContentControl>
+        <ContentControl Name="Reservations" Visibility="Hidden" IsEnabled="False">
+            <Grid>
+
+            </Grid>
+        </ContentControl>
+        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="False">
+            <Grid>
+
+            </Grid>
+        </ContentControl>
+        <ContentControl Name="RoomPicker" Visibility="Hidden" IsEnabled="False">
+            <Grid>
+
+            </Grid>
+        </ContentControl>
+    </Grid>
+</Window>

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace Model
 {
     [DataContract]
-    class RoomBeds
+    public class RoomSize
     {
         [DataMember]
-        public int Id { get; set; }
+        public int Id { get; internal set; }
 
         [DataMember]
-        public int Beds { get; set; }
+        public string Size { get; internal set; }
     }
 }
