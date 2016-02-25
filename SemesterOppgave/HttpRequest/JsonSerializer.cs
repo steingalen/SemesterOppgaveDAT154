@@ -20,6 +20,16 @@ namespace HttpRequest {
             }
         }
 
+        public static string SerializeList(List<TType> instance)
+        {
+            var serializer = new DataContractJsonSerializer(typeof(List<TType>));
+            using (var stream = new MemoryStream())
+            {
+                serializer.WriteObject(stream, instance);
+                return Encoding.Default.GetString(stream.ToArray());
+            }
+        }
+
         /// <summary>
         /// DeSerializes an object from JSON
         /// </summary>
