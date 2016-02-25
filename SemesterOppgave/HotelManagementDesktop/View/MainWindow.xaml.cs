@@ -28,7 +28,7 @@ namespace HotelManagementDesktop
         {
             InitializeComponent();
 
-            this.DataContext = viewModel;            
+            DataContext = viewModel;         
         }
     }
 }

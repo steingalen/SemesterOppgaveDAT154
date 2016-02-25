@@ -28,5 +28,7 @@ namespace HotelManagementDesktop
         public Model.RoomSearch activeRoomSearch { get; }
 
         public Model.RoomTaskSearch activeRoomTaskSearch { get; }
+
+        public Model.ReservationSearch activeReservationSearch { get; } = new Model.ReservationSearch();
     }
 }

@@ -23,70 +23,75 @@ namespace Model
         }
 
         [DataMember]
+        int id;
         public int Id
         {
-            get { return this.Id; }
+            get { return this.id; }
             set
             {
                 if (value != Id)
                 {
-                    this.Id = value;
+                    this.id = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        string email;
         public string Email
         {
-            get { return this.Email; }
+            get { return this.email; }
             set
             {
                 if (value != Email)
                 {
-                    this.Email = value;
+                    this.email = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        string firstName;
         public string FirstName
         {
-            get { return this.FirstName; }
+            get { return this.firstName; }
             set
             {
                 if (value != FirstName)
                 {
-                    this.FirstName = value;
+                    this.firstName = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        string lastName;
         public string LastName
         {
-            get { return this.LastName; }
+            get { return this.lastName; }
             set
             {
-                if (value != this.FirstName)
+                if (value != this.LastName)
                 {
-                    this.FirstName = value;
+                    this.lastName = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        string password;
         public string Password
         {
-            get { return this.Password; }
+            get { return this.password; }
             set
             {
                 if (value != Password)
                 {
-                    this.Password = value;
+                    this.password = value;
                     NotifyPropertyChanged();
                 }
             }

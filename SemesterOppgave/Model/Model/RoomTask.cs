@@ -23,70 +23,75 @@ namespace Model
         }
 
         [DataMember]
+        int id;
         public int Id
         {
-            get { return this.Id; }
+            get { return this.id; }
             set
             {
                 if(value != Id)
                 {
-                    this.Id = value;
+                    this.id = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        Room room;
         public Room Room
         {
-            get { return this.Room; }
+            get { return this.room; }
             set
             {
                 if(value != Room)
                 {
-                    this.Room = value;
+                    this.room = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        TaskType type;
         public TaskType Type
         {
-            get { return this.Type; }
+            get { return this.type; }
             set
             {
                 if(value != Type)
                 {
-                    this.Type = value;
+                    this.type = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        string comments;
         public string Comments
         {
-            get { return this.Comments; }
+            get { return this.comments; }
             set
             {
                 if(value != Comments)
                 {
-                    this.Comments = value;
+                    this.comments = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        int status;
         public int Status
         {
-            get { return this.Status; }
+            get { return this.status; }
             set
             {
                 if(value != Status)
                 {
-                    this.Status = value;
+                    this.status = value;
                     NotifyPropertyChanged();
                 }
             }

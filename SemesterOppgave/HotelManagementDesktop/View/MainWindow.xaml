@@ -5,25 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagementDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen" d:DataContext="{d:DesignInstance {x:Type local:DesktopVM}}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
-        <ContentControl Name="MainMenu" Visibility="Visible" IsEnabled="True">
+        <ContentControl Name="mainMenu" Visibility="Hidden" IsEnabled="True">
             <Grid>
-                <Button x:Name="button" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75"/>
-                <Button x:Name="button_Copy" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
+                <Button x:Name="mainTasksButton" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
             </Grid>
         </ContentControl>
-        <ContentControl Name="Reservations" Visibility="Hidden" IsEnabled="False">
+        <ContentControl Name="reservations" Visibility="Visible" IsEnabled="True">
+            <Grid>
+                <Label x:Name="reservHeader" Content="Reservations" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="33.333"/>
+                <TextBlock Margin="15,67,0,0" Text="Customer..." Foreground="LightSteelBlue" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Height="23" Width="120" Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=reservCustomerSearchBox}" />
+                <TextBox x:Name="reservCustomerSearchBox" Text="{Binding activeReservationSearch.CustomerName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="Transparent"/>
+                <Button x:Name="reservFindReservations" Content="Find Reservations" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="102"/>
+
+            </Grid>
+        </ContentControl>
+        <ContentControl Name="roomTasks" Visibility="Hidden" IsEnabled="False">
             <Grid>
 
             </Grid>
         </ContentControl>
-        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="False">
-            <Grid>
-
-            </Grid>
-        </ContentControl>
-        <ContentControl Name="RoomPicker" Visibility="Hidden" IsEnabled="False">
+        <ContentControl Name="roomPicker" Visibility="Hidden" IsEnabled="False">
             <Grid>
 
             </Grid>

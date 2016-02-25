@@ -23,14 +23,15 @@ namespace Model
         }
 
         [DataMember]
+        int roomId;
         public int RoomId
         {
-            get { return this.RoomId; }
+            get { return this.roomId; }
             set
             {
                 if(value != RoomId)
                 {
-                    this.RoomId = value;
+                    this.roomId = value;
                     NotifyPropertyChanged();
                 }
             }
