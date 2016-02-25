@@ -1,0 +1,11 @@
+﻿using System.Runtime.Serialization;
+
+namespace HttpRequest.Models
+{
+    public class RoomBeds {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public int Beds { get; set; }
+    }
+}

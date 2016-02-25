@@ -1,0 +1,179 @@
+﻿@model WebApp.Models.ViewList
+
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SemesterOppgave</title>
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/js")
+</head>
+
+<body>
+
+
+    <!-- Content -->
+    <div class="container">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <div class="logo">
+                <h1 class="center">Rent rooms.com</h1>
+            </div>
+            <div class="sign">
+                <input type="button" class="btn" id="sign-in-button" value="Sign in" />
+                <input type="button" class="btn" id="sign-up-button" value="Sign up" />
+            </div>
+
+        </div>
+
+        <!-- Left side -->
+        <div class="filter">
+
+            <!-- Room quality -->
+            <label for="roomQuality">Room quality:&nbsp&nbsp&nbsp&nbsp</label>
+            <select class="ui dropdown" id="roomQuality">
+                <option value="0">Any</option>
+                @foreach (var roomquality in Model.RoomQuality) {
+
+                    <option value="@roomquality.Id">@roomquality.Quality</option>
+                }
+            </select>
+
+
+            <br/>
+
+            <!-- Room size -->
+            <label for="roomSize">Room size:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+            <select class="ui dropdown" id="roomSize">
+                <option value="0">Any</option>
+                @foreach (var size in Model.RoomSize) {
+
+                    <option value="@size.Id">@size.Size</option>
+                }
+            </select>
+
+            <br/>
+
+            <!-- Room size -->
+            <label for="roomBeds">Number of beds:</label>
+            <select class="ui dropdown" id="roomBeds">
+                <option value="0">Any</option>
+                @foreach (var beds in Model.RoomBeds) {
+
+                    <option value="@beds.Id">@beds.Beds</option>
+                }
+
+            </select>
+
+            <br/>
+
+            <label for="start">Start date</label>
+            <input type="datetime" id="start" class="txtfield" placeholder="yyyy-mm-dd"/>
+
+
+            <label for="end">End date</label>
+            <input type="datetime" id="end" class="txtfield" placeholder="yyyy-mm-dd"/>
+
+
+            <input type="button" value="Search" class="btn" style="width: 100%"/>
+            <input type="button" value="Make reservation" class="btn" style="width: 100%"/>
+        </div>
+
+
+        <!-- Right side -->
+        <div class="result">
+            <h1 class="center">Available rooms</h1>
+            <table class="center" id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Quality</th>
+                        <th>Size</th>
+                        <th>Beds</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>January</td>
+                        <td>$100</td>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <td>February</td>
+                        <td>$80</td>
+                        <td>$100</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+
+    </div>
+
+    <!-- Sign in modal -->
+    <div class="modal" id="sign-in-modal">
+
+        <h1 class="center">Sign in</h1>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" class="txtfield" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" class="txtfield" />
+
+
+        <div class="center">
+            <input type="button" value="Sign in" class="btn" />
+            <input type="button" value="Sign up" class="btn" />
+        </div>
+    </div>
+
+    <!-- Sign up modal -->
+    <div class="modal" id="sign-up-modal">
+        <h1 class="center">Sign up</h1>
+
+        <label for="firstname">Firstname</label>
+        <input type="text" id="firstname" class="txtfield" />
+
+        <label for="lastname">Lastname</label>
+        <input type="text" id="lastname" class="txtfield" />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" class="txtfield" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" class="txtfield" />
+        <div class="center">
+            <input type="button" value="Sign up" class="btn" />
+            <input type="button" value="Sign in" class="btn" />
+        </div>
+    </div>
+
+
+    <!-- Sign up modal -->
+    <div class="modal" id="reservation-modal">
+
+        <h1 class="center">Reservation</h1>
+
+        <label for="reservationFirstname">Firstname</label>
+        <input type="text" id="reservationFirstname" class="txtfield" />
+
+        <label for="reservationLastname">Lastname</label>
+        <input type="text" id="reservationLastname" class="txtfield" />
+
+        <label for="resrvationEmail">Email</label>
+        <input type="email" id="resrvationEmail" class="txtfield" />
+
+
+        <label>Datostart</label>
+        <label>Dato slutt</label>
+        <label>Rom</label>
+        <label>Quality</label>
+        <label>Beds</label>
+        <label>Size</label>
+    </div>
+</body>
+</html>
