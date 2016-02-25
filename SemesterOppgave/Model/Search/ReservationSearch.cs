@@ -7,10 +7,10 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Search
+namespace Model
 {
     [DataContract]
-    class ReservationSearch : INotifyPropertyChanged
+    public class ReservationSearch : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,14 +23,15 @@ namespace Model.Search
         }
 
         [DataMember]
+        string customerName;
         public string CustomerName
         {
-            get { return this.CustomerName; }
+            get { return customerName; }
             set
             {
                 if(value != CustomerName)
                 {
-                    this.CustomerName = value;
+                    this.customerName = value;
                     NotifyPropertyChanged();
                 }
             }

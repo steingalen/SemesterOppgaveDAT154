@@ -71,7 +71,7 @@ namespace Model
             // Temp
             ObservableCollection<RoomQuality> list = new ObservableCollection<RoomQuality>();
 
-            list.Add(new RoomQuality() { Id = 0, Quality = 2 });
+            list.Add(new RoomQuality() { Id = 0, Quality = "Excellent" });
 
             return list;
         }

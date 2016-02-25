@@ -11,9 +11,9 @@ namespace Model
     public class RoomQuality
     {
         [DataMember]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public int Quality { get; internal set; }
+        public string Quality { get; set; }
     }
 }

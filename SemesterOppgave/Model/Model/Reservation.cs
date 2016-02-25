@@ -23,70 +23,75 @@ namespace Model
         }
 
         [DataMember]
+        int id;
         public int Id
         {
-            get { return this.Id; }
+            get { return this.id; }
             set
             {
                 if (value != Id)
                 {
-                    this.Id = value;
+                    this.id = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        Room room;
         public Room Room
         {
-            get { return this.Room; }
+            get { return this.room; }
             set
             {
                 if(value != Room)
                 {
-                    this.Room = value;
+                    this.room = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        Customer customer;
         public Customer Customer
         {
-            get { return this.Customer; }
+            get { return this.customer; }
             set
             {
                 if(value != Customer)
                 {
-                    this.Customer = value;
+                    this.customer = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        DateTime start;
         public DateTime Start
         {
-            get { return this.Start; }
+            get { return this.start; }
             set
             {
                 if(value != Start)
                 {
-                    this.Start = value;
+                    this.start = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        DateTime slutt;
         public DateTime Slutt
         {
-            get { return this.Slutt; }
+            get { return this.slutt; }
             set
             {
                 if(value != Slutt)
                 {
-                    this.Slutt = value;
+                    this.slutt = value;
                     NotifyPropertyChanged();
                 }
             }

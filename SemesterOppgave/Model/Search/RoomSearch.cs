@@ -23,12 +23,13 @@ namespace Model
         }
 
         [DataMember]
-        public RoomQuality activeRoomQuality
+        RoomQuality activeRoomQuality;
+        public RoomQuality ActiveRoomQuality
         {
             get { return activeRoomQuality; }
             set
             {
-                if(value != activeRoomQuality)
+                if(value != ActiveRoomQuality)
                 {
                     this.activeRoomQuality = value;
                     NotifyPropertyChanged();
@@ -37,12 +38,13 @@ namespace Model
         }
 
         [DataMember]
-        public RoomBeds activeRoomBeds
+        RoomBeds activeRoomBeds;
+        public RoomBeds ActiveRoomBeds
         {
             get { return this.activeRoomBeds; }
             set
             {
-                if(value != activeRoomBeds)
+                if(value != ActiveRoomBeds)
                 {
                     this.activeRoomBeds = value;
                     NotifyPropertyChanged();
@@ -51,12 +53,13 @@ namespace Model
         }
 
         [DataMember]
-        public RoomSize activeRoomSize
+        RoomSize activeRoomSize;
+        public RoomSize ActiveRoomSize
         {
             get { return this.activeRoomSize; }
             set
             {
-                if(value != activeRoomSize)
+                if(value != ActiveRoomSize)
                 {
                     this.activeRoomSize = value;
                     NotifyPropertyChanged();
@@ -65,12 +68,13 @@ namespace Model
         }
 
         [DataMember]
-        public DateTime activeDateStart
+        DateTime activeDateStart;
+        public DateTime ActiveDateStart
         {
             get { return this.activeDateStart; }
             set
             {
-                if(value != activeDateStart)
+                if(value != ActiveDateStart)
                 {
                     this.activeDateStart = value;
                     NotifyPropertyChanged();
@@ -79,12 +83,13 @@ namespace Model
         }
 
         [DataMember]
-        public DateTime activeDateEnd
+        DateTime activeDateEnd;
+        public DateTime ActiveDateEnd
         {
             get { return this.activeDateEnd; }
             set
             {
-                if(value != activeDateEnd)
+                if(value != ActiveDateEnd)
                 {
                     this.activeDateEnd = value;
                     NotifyPropertyChanged();

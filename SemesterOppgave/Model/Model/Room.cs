@@ -23,56 +23,60 @@ namespace Model
         }
 
         [DataMember]
+        int roomNumber;
         public int RoomNumber
         {
-            get { return this.RoomNumber; }
+            get { return this.roomNumber; }
             set
             {
                 if (value != RoomNumber)
                 {
-                    this.RoomNumber = value;
+                    this.roomNumber = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        RoomSize size;
         public RoomSize Size
         {
-            get { return this.Size; }
+            get { return this.size; }
             set
             {
                 if(value != Size)
                 {
-                    this.Size = value;
+                    this.size = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        RoomBeds beds;
         public RoomBeds Beds
         {
-            get { return this.Beds; }
+            get { return this.beds; }
             set
             {
                 if(value != Beds)
                 {
-                    this.Beds = value;
+                    this.beds = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
         [DataMember]
+        RoomQuality quality;
         public RoomQuality Quality
         {
-            get { return this.Quality; }
+            get { return this.quality; }
             set
             {
                 if(value != Quality)
                 {
-                    this.Quality = value;
+                    this.quality = value;
                     NotifyPropertyChanged();
                 }
             }
