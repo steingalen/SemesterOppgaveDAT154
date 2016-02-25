@@ -38,9 +38,30 @@ namespace WebAPI.Controllers
 
         // GET: api/Reservations/fornavn/etternavn
         [ResponseType(typeof(Reservation))]
-        public async Task<IHttpActionResult> GetReservation(string firstname, string lastname) {
-            var customer = db.Customers.First((x => x.FirstName == firstname && x.LastName == lastname));
-            Console.WriteLine("Her e vi");
+        [Route("api/reservations/{firstname}/{lastname}")]
+        public async Task<IHttpActionResult> GetReservations(string firstname, string lastname) {
+            var customer = await db.Customers.FirstAsync((x => x.FirstName == firstname && x.LastName == lastname));
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var reservation = db.Reservations.Where(x => x.CustomerId == customer.Id);
+            if (!reservation.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(reservation);
+        }
+
+        // GET: api/Reservations/email
+        [ResponseType(typeof(Reservation))]
+        [Route("api/reservations/{email}/")]
+        public async Task<IHttpActionResult> GetReservations(string email)
+        {
+            var customer = await db.Customers.FirstAsync((x => x.Email == email));
             if (customer == null)
             {
                 return NotFound();

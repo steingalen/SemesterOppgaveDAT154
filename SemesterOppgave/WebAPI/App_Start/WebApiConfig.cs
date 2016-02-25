@@ -15,18 +15,7 @@ namespace WebAPI
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "SearchAfterReservation",
-                routeTemplate: "api/{controller}/{firstname}/{lastname}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            config.Routes.MapHttpRoute(
-                name: "SearchForRoom",
-                routeTemplate: "api/{controller}/{quality}/{beds}/{size}/{start}/{slutt}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
+          
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

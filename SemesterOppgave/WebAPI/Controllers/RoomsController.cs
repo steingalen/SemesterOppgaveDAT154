@@ -21,34 +21,70 @@ namespace WebAPI.Controllers
         public IQueryable<Room> GetRooms() {
             return db.Rooms;
         }
-
+        
 
         // GET: api/Rooms/Great/2/Large/2016-02-18/2016-02-20
-        [ResponseType(typeof(Room))]
-        public async Task<IHttpActionResult> GetRoom(string quality, int beds, string size, DateTime start, DateTime slutt) {
+        [Route("api/rooms/{quality}/{beds}/{size}/{start}/{end}")]
+        [ResponseType(typeof(List<Room>))]
+        public async Task<IHttpActionResult> GetRooms(string quality, int beds, string size, string start, string end) {
 
-            var Quality = db.RoomQualities.FirstOrDefault(x => x.Quality == quality);
-            var Size = db.RoomSizes.FirstOrDefault(x => x.Size == size);
-            var Beds = db.RoomBeds.FirstOrDefault(x => x.Beds == beds);
+            // Converts string to datetime
+            DateTime _end;
+            DateTime _start;
+            try {
+                _start = Convert.ToDateTime(start);
+                 _end = Convert.ToDateTime(end);
 
-            if (Quality == null || Size == null || Beds == null) {
+                if (_start > _end)
+                    return NotFound();
+            } catch (FormatException) {
+                return NotFound();
+            }
+            
+            // Fetches rooms baseed on parameters
+            var rooms = db.Rooms;
+
+            if (!quality.Equals("Any")) {
+                var _quality = db.RoomQualities.FirstOrDefault(x => x.Quality == quality);
+                if (_quality == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomQualityId == _quality.Id);
+            }
+            if (!size.Equals("Any")) {
+                var _size = db.RoomSizes.FirstOrDefault(x => x.Size == size);
+                if (_size == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomSizeId == _size.Id);
+            }
+            if (beds != 0) {
+                var _beds = db.RoomBeds.FirstOrDefault(x => x.Beds == beds);
+                if (_beds == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomBedsId == _beds.Id);
+            }
+
+
+            if (!rooms.Any()) {
                 return NotFound();
             }
 
-            var rooms = db.Rooms.Where(x => x.RoomQualityId == Quality.Id && x.RoomSizeId == Size.Id && x.RoomBedsId == Beds.Id);
-            if (!rooms.Any())
-            {
-                return NotFound();
-            }
+            var reservatedRooms =
+                await db.Reservations.Where(
+                    reservation =>
+                        !(_end.Date < DbFunctions.TruncateTime(reservation.Start) ||
+                        _start.Date > DbFunctions.TruncateTime(reservation.Slutt)))
+                        .Select(reservation => reservation.Room)
+                        .ToListAsync();
 
-            //TODO dobbeltskjekke denne linjen?
-            var freeRooms = rooms.Where(room => db.Reservations.Any(x => (room.Id == x.RoomId && (slutt < x.Start || start > x.Slutt)) || room.Id != x.RoomId));
-            if (!freeRooms.Any())
-            {
-                return NotFound();
-            }
+            var usableRooms = new List<Room>();
 
-            return Ok(freeRooms);
+
+            foreach (var room in rooms) {
+                if (!reservatedRooms.Contains(room))
+                    usableRooms.Add(room);
+            }
+            
+            return Ok(usableRooms);
         }
 
         // GET: api/Rooms/5
