@@ -11,9 +11,9 @@ namespace Model
     public class RoomSize
     {
         [DataMember]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string Size { get; internal set; }
+        public string Size { get; set; }
     }
 }

@@ -23,6 +23,32 @@
                            Height="23" Width="120" Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=reservCustomerSearchBox}" />
                 <TextBox x:Name="reservCustomerSearchBox" Text="{Binding activeReservationSearch.CustomerName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="Transparent"/>
                 <Button x:Name="reservFindReservations" Content="Find Reservations" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="102"/>
+                <ListView x:Name="reservListView" ItemsSource="{Binding customerReservations}" HorizontalAlignment="Left" Height="259" Margin="10,164,0,0" VerticalAlignment="Top" Width="375">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Room.RoomNumber}" Header="Room Number"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Start}" Header="Start Date"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Slutt}" Header="End Date"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                
+                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="472,164,0,0" VerticalAlignment="Top" Width="253">
+                    <Grid DataContext="{Binding activeReservation}">
+                        <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding Room.RoomNumber}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+                        <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76"/>
+                        <Label x:Name="reservNameLabel" Content="Name:" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="reservCustomerName" Text="{Binding Customer.FirstName}" HorizontalAlignment="Left" Height="24" Margin="54,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="187"/>
+                        <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
+                        <DatePicker DisplayDate="{Binding Start}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186"/>
+                        <DatePicker DisplayDate="{Binding Slutt}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186"/>
+
+                    </Grid>
+                </Border>
+                
 
             </Grid>
         </ContentControl>
