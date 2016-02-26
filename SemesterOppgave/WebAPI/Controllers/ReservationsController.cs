@@ -113,6 +113,103 @@ namespace WebAPI.Controllers
 
         // POST: api/Reservations
         [ResponseType(typeof(Reservation))]
+        [Route("api/makereservations", Name= "MakeReservation")]
+        public async Task<IHttpActionResult> PostReservation(MakeReservation makeReservation)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var customer = db.Customers.First(c => c.Email == makeReservation.Email);
+            if (customer == null)
+                return BadRequest(ModelState);
+
+            // Converts string to datetime
+            DateTime _end;
+            DateTime _start;
+            try
+            {
+                _start = Convert.ToDateTime(makeReservation.Start);
+                _end = Convert.ToDateTime(makeReservation.End);
+
+                if (_start > _end)
+                    return NotFound();
+            }
+            catch (FormatException)
+            {
+                return NotFound();
+            }
+
+            // Fetches rooms baseed on parameters
+            var rooms = db.Rooms;
+
+            if (!makeReservation.Quality.Equals("Any"))
+            {
+                var quality = db.RoomQualities.FirstOrDefault(x => x.Quality == makeReservation.Quality);
+                if (quality == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomQualityId == quality.Id);
+            }
+            if (!makeReservation.Size.Equals("Any"))
+            {
+                var size = db.RoomSizes.FirstOrDefault(x => x.Size == makeReservation.Size);
+                if (size == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomSizeId == size.Id);
+            }
+            if (makeReservation.Beds != 0)
+            {
+                var _beds = db.RoomBeds.FirstOrDefault(x => x.Beds == makeReservation.Beds);
+                if (_beds == null)
+                    return NotFound();
+                rooms.Where(x => x.RoomBedsId == _beds.Id);
+            }
+
+
+            if (!rooms.Any())
+            {
+                return NotFound();
+            }
+
+            var reservatedRooms =
+                await db.Reservations.Where(
+                    reservation =>
+                        !(_end.Date < DbFunctions.TruncateTime(reservation.Start) ||
+                        _start.Date > DbFunctions.TruncateTime(reservation.Slutt)))
+                        .Select(reservation => reservation.Room)
+                        .ToListAsync();
+
+            var usableRooms = new List<Room>();
+
+
+            foreach (var room in rooms)
+            {
+                if (!reservatedRooms.Contains(room))
+                    usableRooms.Add(room);
+            }
+
+            if (usableRooms.Count == 0)
+                return NotFound();
+
+
+
+            var newReservation = new Reservation() {
+                RoomId = usableRooms[0].Id,
+                Start = makeReservation.Start,
+                Slutt = makeReservation.End,
+                CustomerId = customer.Id,
+            };
+
+            
+            db.Reservations.Add(newReservation);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("MakeReservation", new { id = newReservation.Id }, newReservation);
+        }
+
+        // POST: api/Reservations
+        [ResponseType(typeof(Reservation))]
         public async Task<IHttpActionResult> PostReservation(Reservation reservation)
         {
             if (!ModelState.IsValid)

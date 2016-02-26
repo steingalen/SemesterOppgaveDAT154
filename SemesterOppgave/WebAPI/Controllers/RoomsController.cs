@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         // GET: api/Rooms/Great/2/Large/2016-02-18/2016-02-20
         [Route("api/rooms/{quality}/{beds}/{size}/{start}/{end}")]
         [ResponseType(typeof(List<Room>))]
-        public async Task<IHttpActionResult> GetRooms(string quality, int beds, string size, string start, string end) {
+        public async Task<IHttpActionResult> GetRooms(int quality, int beds, int size, string start, string end) {
 
             // Converts string to datetime
             DateTime _end;
@@ -44,14 +44,14 @@ namespace WebAPI.Controllers
             // Fetches rooms baseed on parameters
             var rooms = db.Rooms;
 
-            if (!quality.Equals("Any")) {
-                var _quality = db.RoomQualities.FirstOrDefault(x => x.Quality == quality);
+            if (quality != 0) {
+                var _quality = db.RoomQualities.FirstOrDefault(x => x.Id == quality);
                 if (_quality == null)
                     return NotFound();
                 rooms.Where(x => x.RoomQualityId == _quality.Id);
             }
-            if (!size.Equals("Any")) {
-                var _size = db.RoomSizes.FirstOrDefault(x => x.Size == size);
+            if (size != 0) {
+                var _size = db.RoomSizes.FirstOrDefault(x => x.Id == size);
                 if (_size == null)
                     return NotFound();
                 rooms.Where(x => x.RoomSizeId == _size.Id);
