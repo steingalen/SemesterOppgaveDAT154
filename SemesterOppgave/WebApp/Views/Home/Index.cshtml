@@ -23,8 +23,9 @@
                 <h1 class="center">Rent rooms.com</h1>
             </div>
             <div class="sign">
-                <input type="button" class="btn" id="sign-in-button" value="Sign in" />
-                <input type="button" class="btn" id="sign-up-button" value="Sign up" />
+                <input type="button" class="btn" id="sign-in-modal-button" value="Sign in" />
+                <input type="button" class="btn" id="sign-up-modal-button" value="Sign up" />
+                <input type="button" class="btn" id="logout-button" value="Log out" style="display: none"/>
             </div>
 
         </div>
@@ -71,15 +72,15 @@
             <br/>
 
             <label for="start">Start date</label>
-            <input type="datetime" id="start" class="txtfield" placeholder="yyyy-mm-dd"/>
+            <input type="datetime" id="startTextField" class="txtfield" placeholder="yyyy-mm-dd"/>
 
 
             <label for="end">End date</label>
-            <input type="datetime" id="end" class="txtfield" placeholder="yyyy-mm-dd"/>
+            <input type="datetime" id="endTextField" class="txtfield" placeholder="yyyy-mm-dd"/>
 
 
-            <input type="button" value="Search" class="btn" style="width: 100%"/>
-            <input type="button" value="Make reservation" class="btn" style="width: 100%"/>
+            <input type="button" value="Search" class="btn" id="search-button" style="width: 100%"/>
+            <input type="button" value="Make reservation" id="reservation-button" class="btn" style="width: 100%"/>
         </div>
 
 
@@ -90,21 +91,12 @@
                 <thead>
                     <tr>
                         <th>Quality</th>
-                        <th>Size</th>
-                        <th>Beds</th>
+                        <th>Room size</th>
+                        <th>Number of beds</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>January</td>
-                        <td>$100</td>
-                        <td>$100</td>
-                    </tr>
-                    <tr>
-                        <td>February</td>
-                        <td>$80</td>
-                        <td>$100</td>
-                    </tr>
+                   
                 </tbody>
 
             </table>
@@ -126,8 +118,8 @@
 
 
         <div class="center">
-            <input type="button" value="Sign in" class="btn" />
-            <input type="button" value="Sign up" class="btn" />
+            <input type="button" value="Sign in" id="sign-in-button" class="btn" />
+            <input type="button" value="Sign up" id="sign-in-to-sign-up" class="btn" />
         </div>
     </div>
 
@@ -135,45 +127,57 @@
     <div class="modal" id="sign-up-modal">
         <h1 class="center">Sign up</h1>
 
-        <label for="firstname">Firstname</label>
-        <input type="text" id="firstname" class="txtfield" />
+        <label for="signUpFirstname">Firstname</label>
+        <input type="text" id="signUpFirstname" class="txtfield" />
 
-        <label for="lastname">Lastname</label>
-        <input type="text" id="lastname" class="txtfield" />
+        <label for="signUpLastname">Lastname</label>
+        <input type="text" id="signUpLastname" class="txtfield" />
 
-        <label for="email">Email</label>
-        <input type="email" id="email" class="txtfield" />
+        <label for="signUpEmail">Email</label>
+        <input type="email" id="signUpEmail" class="txtfield" />
 
-        <label for="password">Password</label>
-        <input type="password" id="password" class="txtfield" />
+        <label for="signUpPassword">Password</label>
+        <input type="password" id="signUpPassword" class="txtfield" />
         <div class="center">
-            <input type="button" value="Sign up" class="btn" />
-            <input type="button" value="Sign in" class="btn" />
+            <input type="button" value="Sign up" id="sign-up-button" class="btn" />
+            <input type="button" value="Sign in" id="sign-up-to-sign-in" class="btn" />
         </div>
     </div>
 
 
-    <!-- Sign up modal -->
+    <!-- Reservation modal -->
     <div class="modal" id="reservation-modal">
 
         <h1 class="center">Reservation</h1>
 
         <label for="reservationFirstname">Firstname</label>
-        <input type="text" id="reservationFirstname" class="txtfield" />
+        <input type="text" id="reservationFirstname" class="txtfield" readonly/>
 
         <label for="reservationLastname">Lastname</label>
-        <input type="text" id="reservationLastname" class="txtfield" />
+        <input type="text" id="reservationLastname" class="txtfield" readonly/>
 
-        <label for="resrvationEmail">Email</label>
-        <input type="email" id="resrvationEmail" class="txtfield" />
+        <label for="reservationEmail">Email</label>
+        <input type="email" id="reservationEmail" class="txtfield" readonly/>
 
+        <label for="resrvationStart">Start</label>
+        <input type="text" id="reservationStart" class="txtfield" readonly/>
 
-        <label>Datostart</label>
-        <label>Dato slutt</label>
-        <label>Rom</label>
-        <label>Quality</label>
-        <label>Beds</label>
-        <label>Size</label>
+        <label for="reservationEnd">End</label>
+        <input type="text" id="reservationEnd" class="txtfield" readonly/>
+
+        <label for="reservationQuality">Quality</label>
+        <input type="text" id="reservationQuality" class="txtfield" readonly/>
+
+        <label for="reservationBeds">Number of beds</label>
+        <input type="text" id="reservationBeds" class="txtfield" readonly/>
+
+        <label for="reservationSize">Size</label>
+        <input type="text" id="reservationSize" class="txtfield" readonly/>
+
+        <label for="reservationPrice">Price</label>
+        <input type="text" id="reservationPrice" class="txtfield" readonly/>
+
+        <input type="button" class="btn" id="email-button" value="Email conformation" />
     </div>
 </body>
 </html>
