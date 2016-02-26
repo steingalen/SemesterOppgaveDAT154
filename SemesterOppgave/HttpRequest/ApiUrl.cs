@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace HttpRequest
@@ -15,5 +16,7 @@ namespace HttpRequest
         public static readonly string TASKTYPES = _baseUri + "taskTypes/";
         public static readonly string ROOMTASKS = _baseUri + "roomTasks/";
         public static readonly string CUSTOMERS = _baseUri + "customers/";
+        public static readonly string MAKE_RESERVATION = _baseUri + "makereservations/";
+        public static readonly string CUSTOMERS_EXIST = _baseUri + "customersexist/";
     }
 }

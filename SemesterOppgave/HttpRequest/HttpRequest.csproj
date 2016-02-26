@@ -50,6 +50,7 @@
     <Compile Include="Models\RoomQuality.cs" />
     <Compile Include="Models\RoomSize.cs" />
     <Compile Include="Models\RoomTask.cs" />
+    <Compile Include="Models\SignInCustomer.cs" />
     <Compile Include="Models\TaskType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiUrl.cs" />
