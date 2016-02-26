@@ -8,6 +8,10 @@ Deretter kan man cancle den.
 Å velge sitt eget prosjekt som start up og kjøre det. 
 WebAPI'et er fortsatt tilgjengelig.
 
+Hvis du kjører Asp.net < 4.6 må man forandre i web.config.
+<compilers><compiler language ..
+Forandre compilerOptions="/langversion:6 til compilerOptions="/langversion:5
+
 Sette mock data inn i database
   1. Velg Tools -> NuGet-Package-Manager -> PAckage Manager Console.
   2. Velg WebAPI under Default project dropdown
