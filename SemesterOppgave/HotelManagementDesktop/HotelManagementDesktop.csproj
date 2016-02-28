@@ -78,7 +78,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\BasePropertyChanged.cs" />
+    <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="ViewModel\CustomerVM.cs" />
     <Compile Include="ViewModel\DesktopVM.cs" />
+    <Compile Include="ViewModel\ReservationViewVM.cs" />
+    <Compile Include="ViewModel\ReservationVM.cs" />
+    <Compile Include="ViewModel\RoomBedsVM.cs" />
+    <Compile Include="ViewModel\RoomQualityVM.cs" />
+    <Compile Include="ViewModel\RoomSearchVM.cs" />
+    <Compile Include="ViewModel\RoomSizeVM.cs" />
+    <Compile Include="ViewModel\RoomTaskVM.cs" />
+    <Compile Include="ViewModel\RoomVM.cs" />
+    <Compile Include="ViewModel\TaskTypeVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -112,6 +124,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HttpRequest\HttpRequest.csproj">
+      <Project>{7ce78cd6-aa3e-404e-93fd-9d391987ecc0}</Project>
+      <Name>HttpRequest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{464a4762-4f4c-4a17-be25-7c7e99602720}</Project>
       <Name>Model</Name>

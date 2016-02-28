@@ -30,5 +30,17 @@ namespace HotelManagementDesktop
 
             DataContext = viewModel;         
         }
+
+        private void findRoomClick(object sender, RoutedEventArgs e)
+        {
+            if (reservListView.SelectedItem == null)
+                return;
+
+            reservations.IsEnabled = false;
+            reservations.Visibility = Visibility.Hidden;
+
+            roomPicker.IsEnabled = true;
+            roomPicker.Visibility = Visibility.Visible;
+        }
     }
 }

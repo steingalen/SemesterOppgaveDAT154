@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using HotelManagementDesktop.ViewModel;
 
 namespace HotelManagementDesktop
 {
-    class DesktopVM
+    class DesktopVM : BasePropertyChanged
     {
-        public ObservableCollection<Model.RoomSize> roomSizes { get; }
+        /*
+        #region Members
+        ObservableCollection<Model.RoomTask> _roomTasks;
+        public ObservableCollection<Model.RoomTask> RoomTasks { get { return _roomTasks; } private set { _roomTasks = value; NotifyPropertyChanged(); } }
 
-        public ObservableCollection<Model.RoomQuality> roomQuality { get; }
+        
+        Model.RoomTask _activeRoomTask;
+        public Model.RoomTask ActiveRoomTask { get { return _activeRoomTask; } private set { _activeRoomTask = value; NotifyPropertyChanged(); } }
 
-        public ObservableCollection<Model.RoomBeds> roomBeds { get; }
+        
+        Model.RoomSearch _activeRoomSearch;
+        public Model.RoomSearch ActiveRoomSearch { get { return _activeRoomSearch; } private set { _activeRoomSearch = value; NotifyPropertyChanged(); } }
 
-        public ObservableCollection<Model.Room> availableRooms { get; }
+        Model.RoomTaskSearch _activeRoomTaskSearch;
+        public Model.RoomTaskSearch ActiveRoomTaskSearch { get { return _activeRoomTaskSearch; } private set { _activeRoomTaskSearch = value; NotifyPropertyChanged(); } }
+        #endregion Members
+        */
+        public ReservationViewVM ReservationVM { get; set; } = new ReservationViewVM();
 
-        public ObservableCollection<Model.Reservation> customerReservations { get;}
-
-        public ObservableCollection<Model.RoomTask> roomTasks { get; }
-
-        public Model.Reservation activeReservation { get; }
-
-        public Model.RoomTask activeRoomTask { get; }
-
-        public Model.RoomSearch activeRoomSearch { get; }
-
-        public Model.RoomTaskSearch activeRoomTaskSearch { get; }
-
-        public Model.ReservationSearch activeReservationSearch { get; } = new Model.ReservationSearch();
+        public RoomSearchVM roomSearchVM { get; set; } = new RoomSearchVM();
     }
 }

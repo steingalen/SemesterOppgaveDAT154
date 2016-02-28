@@ -13,9 +13,9 @@ namespace Model
     public class TaskType
     {
         [DataMember]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string Type { get; internal set; }
+        public string Type { get; set; }
     }
 }
