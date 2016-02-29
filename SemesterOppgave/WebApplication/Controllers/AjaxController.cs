@@ -22,7 +22,7 @@ namespace WebApplication.Controllers
             var end = HttpContext.Request.Params.Get("End");
 
             var jsonFromWebService =
-                await ApiRequests.Get(ApiUrl.ROOMS, quality + "/" + size + "/" + beds + "/" + start + "/" + end);
+                await ApiRequests.Get(ApiUrl.ROOMS, quality + "/"  + beds + "/" + size + "/" + start + "/" + end);
             var deserialized = JsonSerializer<Room>.DeSerializeAsList(jsonFromWebService);
             var serialized = JsonSerializer<Room>.SerializeList(deserialized);
 

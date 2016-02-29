@@ -22,7 +22,7 @@
         </select>
 
         <!-- Room size -->
-        <label for="roomSize">Room quality</label>
+        <label for="roomSize">Room size</label>
         <select class="form-control" id="roomSize">
             <option value="0">Any</option>
             @foreach (var room in Model.RoomSize) {
@@ -32,12 +32,12 @@
         </select>
 
         <!-- Room Beds -->
-        <label for="roomBeds">Room quality</label>
+        <label for="roomBeds">Number of beds</label>
         <select class="form-control" id="roomBeds">
             <option value="0">Any</option>
-            @foreach (var roomquality in Model.RoomQuality) {
+            @foreach (var roomquality in Model.RoomBeds) {
 
-                <option value="@roomquality.Id">@roomquality.Quality</option>
+                <option value="@roomquality.Id">@roomquality.Beds</option>
             }
         </select>
 
