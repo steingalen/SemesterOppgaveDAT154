@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
 
+    /*
+    =======================================================================================================================
+                                                        Global variables
+    =======================================================================================================================
+    */
     var table = $("#roomTable");
     var highlightRowBackgroundColor = "#333333";
     var defaultRowBackgroundColor = "white";
@@ -8,18 +13,27 @@
     var selectedRow;
     var baseUrl = "http://localhost:2517/Ajax/";
 
-    $("#search").click(function () {
+
+    /*
+    =======================================================================================================================
+                                                        Main functions
+    =======================================================================================================================
+    */
+
+    // Search functions
+    function search() {
 
         var searchParamater = "/?Quality=" + $("#roomQuality option:selected").val() +
-                                "&Size=" + $("#roomSize option:selected").val() +
-                                "&Beds=" + $("#roomBeds option:selected").val() +
-                                "&Start=" + $("#start").val() +
-                                "&End=" + $("#end").val();
+            "&Size=" + $("#roomSize option:selected").val() +
+            "&Beds=" + $("#roomBeds option:selected").val() +
+            "&Start=" + $("#start").val() +
+            "&End=" + $("#end").val();
 
         try {
-            
+
             table.find("tbody")[0].remove();
-        }catch (e){}
+        } catch (e) {
+        }
         $.ajax({
             type: "GET",
             headers: {
@@ -30,10 +44,10 @@
             url: baseUrl + "Search" + searchParamater,
             success: populateTable
         });
-    });
+    }
 
-    $("#makeReservation").click(function () {
-       
+    // Makes a reservation
+    function makeReservation() {
         if (typeof selectedRow == "undefined")
             return;
 
@@ -45,12 +59,14 @@
             "Beds": selectedRow[2].innerHTML
         }
 
+        console.log("Quality: " + selectedRow[0].innerHTML + ", Size: " + selectedRow[1].innerHTML + ", Beds: " + selectedRow[2].innerHTML);
+
         $.ajax({
             type: "POST",
             data: reservationJson,
             dataType: "json",
             url: baseUrl + "makeReservation",
-            error: function(data) {
+            error: function (data) {
                 alert("Have you logged in?");
             },
             success: function (data) {
@@ -75,11 +91,28 @@
 
                 colorRow(selectedRow, defaultRowBackgroundColor, defaultRowColor);
                 selectedRow = null;
+                search();
             }
         });
-    });
+    }
 
-    
+    /*
+    =======================================================================================================================
+                                                        Click events
+    =======================================================================================================================
+    */
+
+    // Search button
+    $("#search").click(function() {search();});
+
+    // reservation button
+    $("#makeReservation").click(function () { makeReservation();});
+
+    /*
+    =======================================================================================================================
+                                                        General functions
+    =======================================================================================================================
+    */
     // Populates the table with data
     function populateTable(data) {
         var newTbody = document.createElement('tbody');
@@ -100,7 +133,6 @@
 
         setRowClickHandlers();
     }
-
 
     // Adds a cell to a row
     function addRowToTable(row, cell, value) {
@@ -147,7 +179,5 @@
             list[i].style.background = background;
             list[i].style.color = color;
         }
-    }
-    
-
+    }   
 })

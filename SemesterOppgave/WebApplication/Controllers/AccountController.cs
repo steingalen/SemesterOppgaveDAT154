@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication.Models;
+using WebAPI.Models;
+using HttpRequestToWebAPI = HttpRequest;
+using HttpRequest = System.Web.HttpRequest;
 
 namespace WebApplication.Controllers
 {
@@ -156,7 +159,8 @@ namespace WebApplication.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var json = HttpRequestToWebAPI.JsonSerializer<Customer>.Serialize(new Customer() {FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, Password = model.Password});
+                    await HttpRequestToWebAPI.ApiRequests.Post(HttpRequestToWebAPI.ApiUrl.CUSTOMERS, json);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
