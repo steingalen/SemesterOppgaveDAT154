@@ -177,7 +177,9 @@
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -251,6 +253,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HttpRequest\HttpRequest.csproj">
+      <Project>{66ca53e1-0a57-43e7-b011-cd62049eff17}</Project>
+      <Name>HttpRequest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{464a4762-4f4c-4a17-be25-7c7e99602720}</Project>
       <Name>Model</Name>

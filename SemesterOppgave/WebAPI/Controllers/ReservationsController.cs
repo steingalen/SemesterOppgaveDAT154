@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -44,6 +41,27 @@ namespace WebAPI.Controllers
         public async Task<IHttpActionResult> GetReservations(string firstname, string lastname) {
             var customer = await db.Customers.FirstAsync((x => x.FirstName == firstname && x.LastName == lastname));
 
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var reservation = db.Reservations.Where(x => x.CustomerId == customer.Id);
+            if (!reservation.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(reservation);
+        }
+
+        
+        // GET: api/Reservations/email
+        [ResponseType(typeof(Reservation))]
+        [Route("api/reservations/customer/{id}")]
+        public async Task<IHttpActionResult> GetReservations(int id)
+        {
+            var customer = await db.Customers.FirstAsync((x => x.Id == id));
             if (customer == null)
             {
                 return NotFound();

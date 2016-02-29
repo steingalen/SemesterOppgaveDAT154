@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -29,6 +25,19 @@ namespace WebAPI.Controllers
         public async Task<IHttpActionResult> GetCustomer(int id)
         {
             Customer customer = await db.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer);
+        }
+
+        // Post: api/Customers/email
+        [ResponseType(typeof(Customer))]
+        [Route("api/customers/search")]
+        public async Task<IHttpActionResult> PostCustomerByMail(Customer c) {
+            Customer customer = await db.Customers.FirstAsync(cust => cust.Email == c.Email);
             if (customer == null)
             {
                 return NotFound();
