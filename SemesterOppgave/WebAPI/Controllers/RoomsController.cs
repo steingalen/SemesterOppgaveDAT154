@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
-    public class RoomsController : ApiController
+   public class RoomsController : ApiController
     {
         private WebAPIContext db = new WebAPIContext();
 
@@ -21,12 +22,11 @@ namespace WebAPI.Controllers
         public IQueryable<Room> GetRooms() {
             return db.Rooms;
         }
-        
 
         // GET: api/Rooms/Great/2/Large/2016-02-18/2016-02-20
-        [Route("api/rooms/{quality}/{beds}/{size}/{start}/{end}")]
+        [Route("api/rooms/{_quality}/{_beds}/{_size}/{start}/{end}")]
         [ResponseType(typeof(List<Room>))]
-        public async Task<IHttpActionResult> GetRooms(int quality, int beds, int size, string start, string end) {
+        public async Task<IHttpActionResult> GetRooms(int _quality, int _beds, int _size, string start, string end) {
 
             // Converts string to datetime
             DateTime _end;
@@ -35,36 +35,45 @@ namespace WebAPI.Controllers
                 _start = Convert.ToDateTime(start);
                  _end = Convert.ToDateTime(end);
 
-                if (_start > _end)
+                if (_start >= _end)
                     return NotFound();
             } catch (FormatException) {
                 return NotFound();
             }
-            
+
             // Fetches rooms baseed on parameters
-            var rooms = db.Rooms;
-
-            if (quality != 0) {
-                var _quality = db.RoomQualities.FirstOrDefault(x => x.Id == quality);
-                if (_quality == null)
-                    return NotFound();
-                rooms.Where(x => x.RoomQualityId == _quality.Id);
-            }
-            if (size != 0) {
-                var _size = db.RoomSizes.FirstOrDefault(x => x.Id == size);
-                if (_size == null)
-                    return NotFound();
-                rooms.Where(x => x.RoomSizeId == _size.Id);
-            }
-            if (beds != 0) {
-                var _beds = db.RoomBeds.FirstOrDefault(x => x.Beds == beds);
-                if (_beds == null)
-                    return NotFound();
-                rooms.Where(x => x.RoomBedsId == _beds.Id);
-            }
+            var queryyRooms = db.Rooms;
+            Expression<Func<Room, bool>> qualityExpression = x => true;
+            Expression<Func<Room, bool>> sizeExpression = x => true;
+            Expression<Func<Room, bool>> bedsExpression = x => true;
 
 
-            if (!rooms.Any()) {
+
+            if (_quality != 0)
+          {
+              var quality = db.RoomQualities.FirstOrDefault(x => x.Id == _quality);
+              if (quality == null)
+                  return NotFound();
+                qualityExpression = (x => x.RoomQualityId == quality.Id);
+          }
+          if (_size != 0)
+          {
+              var size = db.RoomSizes.FirstOrDefault(x => x.Id == _size);
+              if (size == null)
+                  return NotFound();
+                sizeExpression = x => x.RoomSizeId == size.Id;
+          }
+          if (_beds != 0)
+          {
+              var beds = db.RoomBeds.FirstOrDefault(x => x.Id == _beds);
+              if (beds == null)
+                  return NotFound();
+                bedsExpression = x => x.RoomBedsId == beds.Id;
+          }
+
+            var rooms = queryyRooms.Where(qualityExpression).Where(sizeExpression).Where(bedsExpression).ToList();
+
+            if (rooms.Count == 0) {
                 return NotFound();
             }
 
@@ -76,14 +85,9 @@ namespace WebAPI.Controllers
                         .Select(reservation => reservation.Room)
                         .ToListAsync();
 
-            var usableRooms = new List<Room>();
+            var usableRooms = rooms.Where(room => !reservatedRooms.Contains(room)).ToList();
 
 
-            foreach (var room in rooms) {
-                if (!reservatedRooms.Contains(room))
-                    usableRooms.Add(room);
-            }
-            
             return Ok(usableRooms);
         }
 

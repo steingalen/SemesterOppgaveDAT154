@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -133,7 +134,7 @@ namespace WebAPI.Controllers
                 _start = Convert.ToDateTime(makeReservation.Start);
                 _end = Convert.ToDateTime(makeReservation.End);
 
-                if (_start > _end)
+                if (_start >= _end)
                     return NotFound();
             }
             catch (FormatException)
@@ -142,32 +143,39 @@ namespace WebAPI.Controllers
             }
 
             // Fetches rooms baseed on parameters
-            var rooms = db.Rooms;
+            var queryyRooms = db.Rooms;
+            Expression<Func<Room, bool>> qualityExpression = x => true;
+            Expression<Func<Room, bool>> sizeExpression = x => true;
+            Expression<Func<Room, bool>> bedsExpression = x => true;
+
+
 
             if (!makeReservation.Quality.Equals("Any"))
             {
                 var quality = db.RoomQualities.FirstOrDefault(x => x.Quality == makeReservation.Quality);
                 if (quality == null)
                     return NotFound();
-                rooms.Where(x => x.RoomQualityId == quality.Id);
+                qualityExpression = (x => x.RoomQualityId == quality.Id);
             }
             if (!makeReservation.Size.Equals("Any"))
             {
                 var size = db.RoomSizes.FirstOrDefault(x => x.Size == makeReservation.Size);
                 if (size == null)
                     return NotFound();
-                rooms.Where(x => x.RoomSizeId == size.Id);
+                sizeExpression = x => x.RoomSizeId == size.Id;
             }
             if (makeReservation.Beds != 0)
             {
-                var _beds = db.RoomBeds.FirstOrDefault(x => x.Beds == makeReservation.Beds);
-                if (_beds == null)
+                var beds = db.RoomBeds.FirstOrDefault(x => x.Beds == makeReservation.Beds);
+                if (beds == null)
                     return NotFound();
-                rooms.Where(x => x.RoomBedsId == _beds.Id);
+                bedsExpression = x => x.RoomBedsId == beds.Id;
             }
 
+            var rooms = queryyRooms.Where(qualityExpression).Where(sizeExpression).Where(bedsExpression).ToList();
 
-            if (!rooms.Any())
+
+            if (rooms.Count == 0)
             {
                 return NotFound();
             }
@@ -180,14 +188,8 @@ namespace WebAPI.Controllers
                         .Select(reservation => reservation.Room)
                         .ToListAsync();
 
-            var usableRooms = new List<Room>();
+            var usableRooms = rooms.Where(room => !reservatedRooms.Contains(room)).ToList();
 
-
-            foreach (var room in rooms)
-            {
-                if (!reservatedRooms.Contains(room))
-                    usableRooms.Add(room);
-            }
 
             if (usableRooms.Count == 0)
                 return NotFound();
