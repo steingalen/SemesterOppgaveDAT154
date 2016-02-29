@@ -10,7 +10,7 @@ namespace HotelManagementDesktop.ViewModel
 {
     class RoomVM : BasePropertyChanged
     {
-        HttpRequest.Models.Room _room;
+        Models.Room _room;
 
         public int RoomNumber { get { return _room.Id; } set { _room.Id = value;  NotifyPropertyChanged(); } }
 

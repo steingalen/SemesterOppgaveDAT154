@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HttpRequest\HttpRequest.csproj">
-      <Project>{7ce78cd6-aa3e-404e-93fd-9d391987ecc0}</Project>
+      <Project>{66ca53e1-0a57-43e7-b011-cd62049eff17}</Project>
       <Name>HttpRequest</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">

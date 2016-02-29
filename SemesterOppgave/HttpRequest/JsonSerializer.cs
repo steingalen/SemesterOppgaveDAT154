@@ -16,7 +16,7 @@ namespace HttpRequest {
             using (var stream = new MemoryStream())
             {
                 serializer.WriteObject(stream, instance);
-                return Encoding.Default.GetString(stream.ToArray());
+                return Encoding.UTF8.GetString(stream.ToArray(), 0, stream.ToArray().Length);
             }
         }
 
@@ -26,7 +26,7 @@ namespace HttpRequest {
             using (var stream = new MemoryStream())
             {
                 serializer.WriteObject(stream, instance);
-                return Encoding.Default.GetString(stream.ToArray());
+                return Encoding.UTF8.GetString(stream.ToArray(), 0, stream.ToArray().Length);
             }
         }
 
@@ -35,7 +35,7 @@ namespace HttpRequest {
         /// </summary>
         public static TType DeSerialize(string json)
         {
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(json)))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
                 var serializer = new DataContractJsonSerializer(typeof(TType));
                 return serializer.ReadObject(stream) as TType;

@@ -251,10 +251,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HttpRequest\HttpRequest.csproj">
-      <Project>{7ce78cd6-aa3e-404e-93fd-9d391987ecc0}</Project>
-      <Name>HttpRequest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{464a4762-4f4c-4a17-be25-7c7e99602720}</Project>
       <Name>Model</Name>
