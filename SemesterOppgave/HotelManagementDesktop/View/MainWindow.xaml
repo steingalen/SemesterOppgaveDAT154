@@ -16,7 +16,7 @@
                 <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
             </Grid>
         </ContentControl>
-        <ContentControl Name="reservations" Visibility="Hidden" IsEnabled="True" DataContext="{Binding ReservationVM}">
+        <ContentControl Name="reservations" Visibility="Visible" IsEnabled="True" DataContext="{Binding ReservationVM}">
             <Grid>
                 <Label x:Name="reservHeader" Content="Reservations" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="33.333"/>
                 <TextBlock Margin="15,67,0,0" Text="Customer email" Foreground="LightSteelBlue" HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -75,7 +75,7 @@
 
             </Grid>
         </ContentControl>
-        <ContentControl Name="roomPicker" Visibility="Visible" IsEnabled="False" DataContext="{Binding roomPickerVM}">
+        <ContentControl Name="roomPicker" Visibility="Hidden" IsEnabled="False" DataContext="{Binding roomPickerVM}">
             <Grid>
                 <Label x:Name="roomPickerHeader" Content="Choose Room" HorizontalAlignment="Left" Margin="218,10,0,0" VerticalAlignment="Top" FontSize="44.444"/>
                 <Label x:Name="roomPickerLabel1" Content="Quality:" HorizontalAlignment="Left" Margin="36,100,0,0" VerticalAlignment="Top"/>

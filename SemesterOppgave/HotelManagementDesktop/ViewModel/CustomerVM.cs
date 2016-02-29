@@ -6,12 +6,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Models;
 
 namespace HotelManagementDesktop.ViewModel
 {
     class CustomerVM : BasePropertyChanged
     {
-        HttpRequest.Models.Customer _customer;
+        Customer _customer;
 
         public string Email { get { return _customer.Email; } set { _customer.Email = value;  NotifyPropertyChanged(); } }
 
@@ -113,7 +114,7 @@ namespace HotelManagementDesktop.ViewModel
         }
         #endregion Commands
 
-        public CustomerVM(HttpRequest.Models.Customer customer)
+        public CustomerVM(Customer customer)
         {
             _customer = customer;
         }

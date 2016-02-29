@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models {
+﻿namespace Models {
     public class Room {
         public int Id { get; set; }
         public virtual  RoomSize Size { get; set; }

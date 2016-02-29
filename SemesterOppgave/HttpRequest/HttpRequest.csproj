@@ -43,15 +43,6 @@
   <ItemGroup>
     <Compile Include="ApiRequest.cs" />
     <Compile Include="JsonSerializer.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Reservation.cs" />
-    <Compile Include="Models\Room.cs" />
-    <Compile Include="Models\RoomBeds.cs" />
-    <Compile Include="Models\RoomQuality.cs" />
-    <Compile Include="Models\RoomSize.cs" />
-    <Compile Include="Models\RoomTask.cs" />
-    <Compile Include="Models\SignInCustomer.cs" />
-    <Compile Include="Models\TaskType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiUrl.cs" />
   </ItemGroup>

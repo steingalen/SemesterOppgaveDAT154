@@ -1,10 +1,7 @@
 ﻿using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using HttpRequest;
-using Microsoft.AspNet.Identity.Owin;
-using MakeReservation = WebAPI.Models.MakeReservation;
-using Room = HttpRequest.Models.Room;
+using Models;
 
 namespace WebApplication.Controllers
 {

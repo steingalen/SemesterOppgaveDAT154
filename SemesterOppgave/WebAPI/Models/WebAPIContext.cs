@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Models;
 
 namespace WebAPI.Models
 {
@@ -19,20 +20,20 @@ namespace WebAPI.Models
         {
         }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.Customer> Customers { get; set; }
+        public System.Data.Entity.DbSet<Customer> Customers { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.TaskType> TaskTypes { get; set; }
+        public System.Data.Entity.DbSet<TaskType> TaskTypes { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.RoomSize> RoomSizes { get; set; }
+        public System.Data.Entity.DbSet<RoomSize> RoomSizes { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.RoomQuality> RoomQualities { get; set; }
+        public System.Data.Entity.DbSet<RoomQuality> RoomQualities { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.RoomBeds> RoomBeds { get; set; }
+        public System.Data.Entity.DbSet<RoomBeds> RoomBeds { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.Room> Rooms { get; set; }
+        public System.Data.Entity.DbSet<Room> Rooms { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.Reservation> Reservations { get; set; }
+        public System.Data.Entity.DbSet<Reservation> Reservations { get; set; }
 
-        public System.Data.Entity.DbSet<WebAPI.Models.RoomTask> RoomTasks { get; set; }
+        public System.Data.Entity.DbSet<RoomTask> RoomTasks { get; set; }
     }
 }

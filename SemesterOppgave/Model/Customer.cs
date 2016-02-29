@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WebAPI.Models {
+﻿namespace Models {
     public class Customer {
         public int Id { get; set; }
         public string FirstName { get; set; }

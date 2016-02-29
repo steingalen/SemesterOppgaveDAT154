@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using Models;
 
-using HttpRequest.Models;
-
-namespace WebApp.Models
+namespace WebApplication.Models
 {
     public class ViewList
     {

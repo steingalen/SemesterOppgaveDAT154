@@ -37,19 +37,16 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Customer.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="MakeReservation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Reservation.cs" />
-    <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\RoomBeds.cs" />
-    <Compile Include="Model\RoomQuality.cs" />
-    <Compile Include="Search\ReservationSearch.cs" />
-    <Compile Include="Search\RoomSearch.cs" />
-    <Compile Include="Model\RoomSize.cs" />
-    <Compile Include="Model\RoomTask.cs" />
-    <Compile Include="Search\RoomTaskSearch.cs" />
-    <Compile Include="Model\TaskType.cs" />
-    <Compile Include="WebServiceConnector.cs" />
+    <Compile Include="Reservation.cs" />
+    <Compile Include="Room.cs" />
+    <Compile Include="RoomBeds.cs" />
+    <Compile Include="RoomQuality.cs" />
+    <Compile Include="RoomSize.cs" />
+    <Compile Include="RoomTask.cs" />
+    <Compile Include="TaskType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 using WebAPI.Models;
+using Models;
 
 namespace WebAPI.Migrations
 {

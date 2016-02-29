@@ -10,26 +10,15 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HttpRequest;
-using HttpRequest.Models;
+using Models;
 using WebAPI.Models;
-using Customer = WebAPI.Models.Customer;
 
 namespace WebAPI.Controllers
 {
     public class CustomersController : ApiController
     {
         private WebAPIContext db = new WebAPIContext();
-
-        [HttpPost]
-        [Route("api/customersexist/")]
-        public async Task<IHttpActionResult> CustomersExist(Customer cust) {
-            var customer = db.Customers.FirstOrDefault(e => e.Email == cust.Email);
-            if (customer == null)
-                return Ok(JsonSerializer<SignInCustomer>.Serialize(new SignInCustomer() {Success = false}));
-
-            return Ok(new SignInCustomer() { Success = true, Ticket = "", FirstName = customer.FirstName, LastName = customer.LastName});
-        }
-
+        
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
@@ -85,7 +74,7 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Customers
-        [ResponseType(typeof(SignInCustomer))]
+        [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> PostCustomer(Customer customer)
         {
             if (!ModelState.IsValid)
@@ -95,7 +84,7 @@ namespace WebAPI.Controllers
 
             db.Customers.Add(customer);
             await db.SaveChangesAsync();
-            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, new SignInCustomer() { Success = true, Ticket = "", FirstName = customer.FirstName, LastName = customer.LastName });
+            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
 
         // DELETE: api/Customers/5

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,9 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication.Models;
-using WebAPI.Models;
 using HttpRequestToWebAPI = HttpRequest;
-using HttpRequest = System.Web.HttpRequest;
+using Models;
 
 namespace WebApplication.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models {
+﻿namespace Models {
     public class RoomQuality {
         public int Id { get; set; }
         public string Quality { get; set; }

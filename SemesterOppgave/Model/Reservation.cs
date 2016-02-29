@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Web.Security;
 
-namespace WebAPI.Models {
+namespace Models {
     public class Reservation {
         public int Id { get; set; }
         public int CustomerId { get; set; } // FK
