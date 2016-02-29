@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Models;
 
 namespace HotelManagementDesktop.ViewModel
@@ -48,12 +42,12 @@ namespace HotelManagementDesktop.ViewModel
 
             
             // FIXXX
-            //List<HttpRequest.Models.Reservation> co = HttpRequest.JsonSerializer<HttpRequest.Models.Reservation>.DeSerializeAsList(reservations);
-            //var a = co.ToList<HttpRequest.Models.Reservation>();
+            //List<.Reservation> co = HttpRequest.JsonSerializer<.Reservation>.DeSerializeAsList(reservations);
+            //var a = co.ToList<.Reservation>();
 
             //ObservableCollection <ReservationVM> collection = new ObservableCollection<ReservationVM>();
             //collection.Add(new ReservationVM(co));
-            //foreach (HttpRequest.Models.Reservation c in a)
+            //foreach (.Reservation c in a)
             //    collection.Add(new ReservationVM(c));
 
             //Reservations = collection;

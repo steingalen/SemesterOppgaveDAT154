@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models;
 
 namespace HotelManagementDesktop.ViewModel
 {
@@ -37,11 +34,11 @@ namespace HotelManagementDesktop.ViewModel
         {
             string response = await HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.CUSTOMERS);
 
-            List<HttpRequest.Models.Customer> cust = HttpRequest.JsonSerializer<HttpRequest.Models.Customer>.DeSerializeAsList(response);
+            List<Customer> cust = HttpRequest.JsonSerializer<Customer>.DeSerializeAsList(response);
 
             ObservableCollection<CustomerVM> collection = new ObservableCollection<CustomerVM>();
 
-            foreach (HttpRequest.Models.Customer c in cust)
+            foreach (Customer c in cust)
                 collection.Add(new CustomerVM(c));
 
             Customers = collection;

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using Models;
 
 namespace HotelManagementDesktop.ViewModel
 {
     class ReservationVM : BasePropertyChanged
     {
-        HttpRequest.Models.Reservation _reservation;
+        Reservation _reservation;
 
         RoomVM _room;
         public RoomVM Room { get { return _room; } set { _room = value; NotifyPropertyChanged(); } }
@@ -37,7 +32,7 @@ namespace HotelManagementDesktop.ViewModel
         #region Commands
         
         #endregion Commands
-        public ReservationVM(HttpRequest.Models.Reservation reservation)
+        public ReservationVM(Reservation reservation)
         {
             _reservation = reservation;
 

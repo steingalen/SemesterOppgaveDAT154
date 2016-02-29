@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Models;
 
 namespace HotelManagementDesktop.ViewModel
 {
     class RoomTaskVM : BasePropertyChanged
     {
-        HttpRequest.Models.RoomTask _roomTask;
+        RoomTask _roomTask;
 
         RoomVM _room;
         public RoomVM Room { get { return _room; } set { _room = value;  NotifyPropertyChanged(); } }
@@ -22,7 +16,7 @@ namespace HotelManagementDesktop.ViewModel
 
         public int Status { get { return _roomTask.Status; } set { _roomTask.Status = value;  NotifyPropertyChanged(); } }
 
-        public RoomTaskVM(HttpRequest.Models.RoomTask roomTask)
+        public RoomTaskVM(RoomTask roomTask)
         {
             _roomTask = roomTask;
 
