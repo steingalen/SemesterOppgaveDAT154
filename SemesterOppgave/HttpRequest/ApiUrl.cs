@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace HttpRequest
+﻿namespace HttpRequest
 {
     public class ApiUrl
     {
@@ -17,6 +12,14 @@ namespace HttpRequest
         public static readonly string ROOMTASKS = _baseUri + "roomTasks/";
         public static readonly string CUSTOMERS = _baseUri + "customers/";
         public static readonly string MAKE_RESERVATION = _baseUri + "makereservations/";
-        public static readonly string CUSTOMERS_EXIST = _baseUri + "customersexist/";
+        public static readonly string RESERVATIONS_BY_CUSTOMER = _baseUri + "reservations/customer/";
+        public static readonly string ROOM_TASKS_BY_ROOM = _baseUri + "roomtask/room/";
+        public static readonly string CUSTOMER_SEARCH = _baseUri + "customers/search/";
+
+        
+
+
+
+
     }
 }
