@@ -11,7 +11,7 @@ namespace HotelManagementDesktop.ViewModel
 {
     class CustomerVM : BasePropertyChanged
     {
-        Model.Customer _customer;
+        HttpRequest.Models.Customer _customer;
 
         public string Email { get { return _customer.Email; } set { _customer.Email = value;  NotifyPropertyChanged(); } }
 
@@ -36,9 +36,26 @@ namespace HotelManagementDesktop.ViewModel
             Reservations.Add(newReservation);
         }
 
-        void updateReservations()
+        public async void UpdateReservations()
         {
-            // Retry database etc
+            string reservations = await HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.RESERVATIONS, FirstName + "/" + LastName);
+
+            if (reservations.Length < 3)
+                return;
+
+            Console.WriteLine(reservations);
+
+            
+            // FIXXX
+            //List<HttpRequest.Models.Reservation> co = HttpRequest.JsonSerializer<HttpRequest.Models.Reservation>.DeSerializeAsList(reservations);
+            //var a = co.ToList<HttpRequest.Models.Reservation>();
+
+            //ObservableCollection <ReservationVM> collection = new ObservableCollection<ReservationVM>();
+            //collection.Add(new ReservationVM(co));
+            //foreach (HttpRequest.Models.Reservation c in a)
+            //    collection.Add(new ReservationVM(c));
+
+            //Reservations = collection;
         }
 
         void deleteReservation(ReservationVM a)
@@ -47,14 +64,14 @@ namespace HotelManagementDesktop.ViewModel
             Reservations.Remove(a);
             // Rest taken care of in VM itself
 
-            updateReservations();
+            UpdateReservations();
         }
 
         void updateCreateReservation(ReservationVM a)
         {
             a.UpdateCreateReservation();
 
-            updateReservations();
+            UpdateReservations();
         }
         #endregion Functions
 
@@ -68,14 +85,14 @@ namespace HotelManagementDesktop.ViewModel
             }
         }
 
-        Command _updateReservations;
-        public Command UpdateReservations
-        {
-            get
-            {
-                return _updateReservations ?? (_updateReservations = new Command(() => updateReservations(), true));
-            }
-        }
+        //Command _updateReservations;
+        //public Command UpdateReservations
+        //{
+        //    get
+        //    {
+        //        return _updateReservations ?? (_updateReservations = new Command(() => updateReservations(), true));
+        //    }
+        //}
 
         CommandPara1 _deleteReservation;
         public CommandPara1 DeleteReservation
@@ -96,7 +113,7 @@ namespace HotelManagementDesktop.ViewModel
         }
         #endregion Commands
 
-        public CustomerVM(Model.Customer customer)
+        public CustomerVM(HttpRequest.Models.Customer customer)
         {
             _customer = customer;
         }

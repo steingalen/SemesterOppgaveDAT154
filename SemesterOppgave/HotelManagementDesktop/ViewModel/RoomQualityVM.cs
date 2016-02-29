@@ -10,11 +10,11 @@ namespace HotelManagementDesktop.ViewModel
 {
     class RoomQualityVM : BasePropertyChanged
     {
-        Model.RoomQuality _roomQuality;
+        HttpRequest.Models.RoomQuality _roomQuality;
 
         public string Quality { get { return _roomQuality.Quality; } set { _roomQuality.Quality = value; NotifyPropertyChanged(); } }
 
-        public RoomQualityVM(Model.RoomQuality roomQuality)
+        public RoomQualityVM(HttpRequest.Models.RoomQuality roomQuality)
         {
             _roomQuality = roomQuality;
         }

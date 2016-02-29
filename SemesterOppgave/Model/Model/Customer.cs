@@ -38,21 +38,6 @@ namespace Model
         }
 
         [DataMember]
-        string email;
-        public string Email
-        {
-            get { return this.email; }
-            set
-            {
-                if (value != Email)
-                {
-                    this.email = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        [DataMember]
         string firstName;
         public string FirstName
         {
@@ -77,6 +62,21 @@ namespace Model
                 if (value != this.LastName)
                 {
                     this.lastName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        string email;
+        public string Email
+        {
+            get { return this.email; }
+            set
+            {
+                if (value != Email)
+                {
+                    this.email = value;
                     NotifyPropertyChanged();
                 }
             }

@@ -10,11 +10,11 @@ namespace HotelManagementDesktop.ViewModel
 {
     class RoomSizeVM : BasePropertyChanged
     {
-        Model.RoomSize _roomSize;
+        HttpRequest.Models.RoomSize _roomSize;
 
         public string Size { get { return _roomSize.Size; } set { _roomSize.Size = value; NotifyPropertyChanged(); } }
 
-        public RoomSizeVM(Model.RoomSize roomSize)
+        public RoomSizeVM(HttpRequest.Models.RoomSize roomSize)
         {
             _roomSize = roomSize;
         }

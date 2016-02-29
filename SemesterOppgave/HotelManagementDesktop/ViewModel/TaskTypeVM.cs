@@ -10,11 +10,11 @@ namespace HotelManagementDesktop.ViewModel
 {
     class TaskTypeVM : BasePropertyChanged
     {
-        Model.TaskType _taskType;
+        HttpRequest.Models.TaskType _taskType;
 
         public string Type { get { return _taskType.Type; } set { _taskType.Type = value; NotifyPropertyChanged(); } }
 
-        public TaskTypeVM(Model.TaskType taskType)
+        public TaskTypeVM(HttpRequest.Models.TaskType taskType)
         {
             _taskType = taskType;
         }

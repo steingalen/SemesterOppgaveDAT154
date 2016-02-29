@@ -10,7 +10,7 @@ namespace HotelManagementDesktop.ViewModel
 {
     class RoomTaskVM : BasePropertyChanged
     {
-        Model.RoomTask _roomTask;
+        HttpRequest.Models.RoomTask _roomTask;
 
         RoomVM _room;
         public RoomVM Room { get { return _room; } set { _room = value;  NotifyPropertyChanged(); } }
@@ -22,7 +22,7 @@ namespace HotelManagementDesktop.ViewModel
 
         public int Status { get { return _roomTask.Status; } set { _roomTask.Status = value;  NotifyPropertyChanged(); } }
 
-        public RoomTaskVM(Model.RoomTask roomTask)
+        public RoomTaskVM(HttpRequest.Models.RoomTask roomTask)
         {
             _roomTask = roomTask;
 

@@ -10,7 +10,7 @@ namespace HotelManagementDesktop.ViewModel
 {
     class ReservationVM : BasePropertyChanged
     {
-        Model.Reservation _reservation;
+        HttpRequest.Models.Reservation _reservation;
 
         RoomVM _room;
         public RoomVM Room { get { return _room; } set { _room = value; NotifyPropertyChanged(); } }
@@ -37,12 +37,12 @@ namespace HotelManagementDesktop.ViewModel
         #region Commands
         
         #endregion Commands
-        public ReservationVM(Model.Reservation reservation)
+        public ReservationVM(HttpRequest.Models.Reservation reservation)
         {
             _reservation = reservation;
 
             _room = new RoomVM(_reservation.Room);
-            _customer = new CustomerVM(_reservation.Customer);
+            //_customer = new CustomerVM(_reservation.Customer);
         }
 
         public ReservationVM(CustomerVM customer)

@@ -20,26 +20,31 @@ namespace HotelManagementDesktop.ViewModel
         ObservableCollection<CustomerVM> _customers;
         public ObservableCollection<CustomerVM> Customers { get { return _customers; } private set { _customers = value; NotifyPropertyChanged(); } }
 
+        CustomerVM _selectedCustomer;
+        public CustomerVM SelectedCustomer { get { return _selectedCustomer; }
+            set
+            {
+                _selectedCustomer = value;
+                _selectedCustomer.UpdateReservations();
+            }
+        }
+
         string _customerSearchName;
         public string CustomerSearchName { get { return _customerSearchName; } set { _customerSearchName = value;  NotifyPropertyChanged(); } }
 
         #region Functions
-        void customerSearch()
+        async void customerSearch()
         {
-            Task<string> response = HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.CUSTOMERS, "MAX/MEKKER/");
+            string response = await HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.CUSTOMERS);
 
-            response.Wait();
+            List<HttpRequest.Models.Customer> cust = HttpRequest.JsonSerializer<HttpRequest.Models.Customer>.DeSerializeAsList(response);
 
-            Console.WriteLine(response.Result);
+            ObservableCollection<CustomerVM> collection = new ObservableCollection<CustomerVM>();
 
-            //List<Model.Customer> cust = HttpRequest.JsonSerializer<Model.Customer>.DeSerializeAsList(response.Result);
+            foreach (HttpRequest.Models.Customer c in cust)
+                collection.Add(new CustomerVM(c));
 
-            //ObservableCollection<CustomerVM> collection = new ObservableCollection<CustomerVM>();
-
-            //foreach (Model.Customer c in cust)
-            //    collection.Add(new CustomerVM(c));
-
-            //Customers = collection;
+            Customers = collection;
         }
 
         #endregion Functions
