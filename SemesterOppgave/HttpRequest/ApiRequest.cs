@@ -28,7 +28,7 @@ namespace HttpRequest {
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync(url + "/" + id);
+                var response = await httpClient.GetAsync(url + id);
                 return (await response.Content.ReadAsStringAsync());
             }
         }
@@ -78,7 +78,7 @@ namespace HttpRequest {
             {
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await httpClient.PutAsync(url + "/" + id, content);
+                var response = await httpClient.PutAsync(url + id, content);
                 return (await response.Content.ReadAsStringAsync());
             }
         }
@@ -93,7 +93,7 @@ namespace HttpRequest {
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.DeleteAsync(url + "/" + id);
+                var response = await httpClient.DeleteAsync(url + id);
                 return (await response.Content.ReadAsStringAsync());
             }
         }

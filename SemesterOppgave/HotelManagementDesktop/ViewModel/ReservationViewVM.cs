@@ -58,22 +58,15 @@ namespace HotelManagementDesktop.ViewModel
 
             string response = await ApiRequests.Post(ApiUrl.CUSTOMER_SEARCH, "{\"Email\":\"" + CustomerEmail + "\"}");
             
-            try
+            Customer customer = HttpRequest.JsonSerializer<Customer>.DeSerialize(response);
+            Console.Write(customer + "  " + customer.FirstName);
+            if (customer.Id != 0)
             {
-                Customer customer = HttpRequest.JsonSerializer<Customer>.DeSerialize(response);
-                Console.Write(customer + "  " + customer.FirstName);
-                if (customer.Id != 0)
-                {
-                    CustomerFound = true;
-                    ActiveCustomer = new CustomerVM(customer);
-                }
-                else
-                    CustomerNotFound = true;
+                CustomerFound = true;
+                ActiveCustomer = new CustomerVM(customer);
             }
-            catch (SerializationException e)
-            {
+            else
                 CustomerNotFound = true;
-            }
 
             CustomerSearchInProgress = false;
         }

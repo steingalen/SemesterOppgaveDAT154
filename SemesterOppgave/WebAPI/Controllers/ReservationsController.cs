@@ -245,6 +245,7 @@ namespace WebAPI.Controllers
         }
 
         // DELETE: api/Reservations/5
+        [HttpDelete]
         [ResponseType(typeof(Reservation))]
         public async Task<IHttpActionResult> DeleteReservation(int id)
         {

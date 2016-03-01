@@ -43,7 +43,7 @@ namespace HotelManagementDesktop.ViewModel
         public ObservableCollection<ReservationVM> Reservations
         {
             get
-            { // Get reservations from db
+            {
                 return _reservations;
             }
             set { _reservations = value; NotifyPropertyChanged(); }
@@ -63,18 +63,18 @@ namespace HotelManagementDesktop.ViewModel
             ReservationsNotFound = false;
 
             string reservationsString = await ApiRequests.Get(ApiUrl.RESERVATIONS_BY_CUSTOMER, _customer.Id);
-                                                                                 
-            if (reservationsString.Length < 3)
-            { // No reservations
-                ReservationsNotFound = true;
-                ReservationSearchInProgress = false;
-            }
 
-            ReservationsFound = true;
-            ReservationSearchInProgress = false;
-            ReservationsNotFound = false;
-            
             List<ReservationDTO> reservationsList = JsonSerializer<ReservationDTO>.DeSerializeAsList(reservationsString);
+
+            if(reservationsList.Count != 0)
+            {
+                ReservationsFound = true;
+            }
+            else
+                ReservationsNotFound = true;
+
+            ReservationSearchInProgress = false;
+            
             ObservableCollection<ReservationVM> collection = new ObservableCollection<ReservationVM>();
 
             foreach (ReservationDTO c in reservationsList)
@@ -113,15 +113,6 @@ namespace HotelManagementDesktop.ViewModel
                 return _newReservation ?? (_newReservation = new Command(() => newReservation(), true));
             }
         }
-
-        //Command _updateReservations;
-        //public Command UpdateReservations
-        //{
-        //    get
-        //    {
-        //        return _updateReservations ?? (_updateReservations = new Command(() => updateReservations(), true));
-        //    }
-        //}
 
         CommandPara1 _deleteReservation;
         public CommandPara1 DeleteReservation

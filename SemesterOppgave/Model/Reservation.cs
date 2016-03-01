@@ -32,5 +32,11 @@ namespace Models {
             Start = Convert.ToDateTime(dto.Start);
             Slutt = Convert.ToDateTime(dto.Slutt);
         }
+
+        public Reservation()
+        {
+            Start = DateTime.Today;
+            Slutt = DateTime.Today;
+        }
     }
 }

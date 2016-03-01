@@ -1,5 +1,6 @@
 ﻿using System;
 using Models;
+using HttpRequest;
 
 namespace HotelManagementDesktop.ViewModel
 {
@@ -18,14 +19,22 @@ namespace HotelManagementDesktop.ViewModel
         public DateTime Slutt { get { return _reservation.Slutt; } set { _reservation.Slutt = value; NotifyPropertyChanged(); } }
 
         #region Functions
-        public void DeleteReservation()
+        public async void DeleteReservation()
         {
-            // Send delete to database if applicable
+            if (_reservation.Id != 0)
+            {
+                var p = await ApiRequests.Delete(ApiUrl.RESERVATIONS, _reservation.Id);
+                Console.WriteLine(p);
+            }
         }
 
-        public void UpdateCreateReservation()
+        public async void UpdateCreateReservation()
         {
             // Find out if already in DB?? Then add/update
+            if (_reservation.Id != 0)
+                await ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id, JsonSerializer<Reservation>.Serialize(_reservation));
+            else
+                await ApiRequests.Post(ApiUrl.RESERVATIONS, JsonSerializer<Reservation>.Serialize(_reservation));
         }
         #endregion Functions
 
@@ -37,12 +46,14 @@ namespace HotelManagementDesktop.ViewModel
             _reservation = reservation;
 
             _room = new RoomVM(_reservation.Room);
-            //_customer = new CustomerVM(_reservation.Customer);
+            _customer = new CustomerVM(_reservation.Customer);
         }
 
         public ReservationVM(CustomerVM customer)
         {
-            _customer = customer;
+            _reservation = new Reservation();
+
+            Customer = customer;
         }
     }
 }
