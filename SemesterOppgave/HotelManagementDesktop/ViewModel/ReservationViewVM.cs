@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Models;
+using HttpRequest;
+using System;
+using System.Runtime.Serialization;
 
 namespace HotelManagementDesktop.ViewModel
 {
@@ -10,38 +13,69 @@ namespace HotelManagementDesktop.ViewModel
     /// </summary>
     class ReservationViewVM : BasePropertyChanged
     {
-
-        ObservableCollection<ReservationVM> _customerReservations;
-        public ObservableCollection<ReservationVM> CustomerReservations { get { return _customerReservations; } private set { _customerReservations = value; NotifyPropertyChanged(); } }
-
-        ObservableCollection<CustomerVM> _customers;
-        public ObservableCollection<CustomerVM> Customers { get { return _customers; } private set { _customers = value; NotifyPropertyChanged(); } }
-
-        CustomerVM _selectedCustomer;
-        public CustomerVM SelectedCustomer { get { return _selectedCustomer; }
+        CustomerVM _activeCustomer;
+        public CustomerVM ActiveCustomer { get { return _activeCustomer; }
             set
             {
-                _selectedCustomer = value;
-                _selectedCustomer.UpdateReservations();
+                _activeCustomer = value;
+                _activeCustomer.UpdateReservations();
+                NotifyPropertyChanged();
             }
         }
 
-        string _customerSearchName;
-        public string CustomerSearchName { get { return _customerSearchName; } set { _customerSearchName = value;  NotifyPropertyChanged(); } }
+        #region CustomerSearch
+        bool _customerSearchInProgress = false;
+        public bool CustomerSearchInProgress
+        {
+            get { return _customerSearchInProgress; }
+            set { _customerSearchInProgress = value; NotifyPropertyChanged(); }
+        }
+
+        bool _customerFound = false;
+        public bool CustomerFound
+        {
+            get { return _customerFound; }
+            set { _customerFound = value; NotifyPropertyChanged(); }
+        }
+
+        bool _customerNotFound = false;
+        public bool CustomerNotFound
+        {
+            get { return _customerNotFound; }
+            set { _customerNotFound = value; NotifyPropertyChanged(); }
+        }
+        #endregion CustomerSearch
+
+        string _customerSearchEmail;
+        public string CustomerEmail { get { return _customerSearchEmail; } set { _customerSearchEmail = value;  NotifyPropertyChanged(); } }
 
         #region Functions
         async void customerSearch()
         {
-            string response = await HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.CUSTOMERS);
+            CustomerFound = false;
+            CustomerNotFound = false;
+            CustomerSearchInProgress = true;
 
-            List<Customer> cust = HttpRequest.JsonSerializer<Customer>.DeSerializeAsList(response);
+            string response = await ApiRequests.Post(ApiUrl.CUSTOMER_SEARCH, "{\"Email\":\"" + CustomerEmail + "\"}");
+            
+            try
+            {
+                Customer customer = HttpRequest.JsonSerializer<Customer>.DeSerialize(response);
+                Console.Write(customer + "  " + customer.FirstName);
+                if (customer.Id != 0)
+                {
+                    CustomerFound = true;
+                    ActiveCustomer = new CustomerVM(customer);
+                }
+                else
+                    CustomerNotFound = true;
+            }
+            catch (SerializationException e)
+            {
+                CustomerNotFound = true;
+            }
 
-            ObservableCollection<CustomerVM> collection = new ObservableCollection<CustomerVM>();
-
-            foreach (Customer c in cust)
-                collection.Add(new CustomerVM(c));
-
-            Customers = collection;
+            CustomerSearchInProgress = false;
         }
 
         #endregion Functions

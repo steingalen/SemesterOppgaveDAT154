@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Models;
+using HttpRequest;
+using System.Collections.Generic;
 
 namespace HotelManagementDesktop.ViewModel
 {
@@ -13,6 +15,29 @@ namespace HotelManagementDesktop.ViewModel
         public string FirstName { get { return _customer.FirstName; } set { _customer.FirstName = value;  NotifyPropertyChanged(); } }
 
         public string LastName { get { return _customer.LastName; } set { _customer.LastName = value;  NotifyPropertyChanged(); } }
+
+        #region ReservationSearch
+        bool _reservationSearchInProgress = false;
+        public bool ReservationSearchInProgress
+        {
+            get { return _reservationSearchInProgress; }
+            set { _reservationSearchInProgress = value; NotifyPropertyChanged(); }
+        }
+
+        bool _reservationsFound = false;
+        public bool ReservationsFound
+        {
+            get { return _reservationsFound; }
+            set { _reservationsFound = value; NotifyPropertyChanged(); }
+        }
+
+        bool _reservationsNotFound = false;
+        public bool ReservationsNotFound
+        {
+            get { return _reservationsNotFound; }
+            set { _reservationsNotFound = value; NotifyPropertyChanged(); }
+        }
+        #endregion ReservationSearch
 
         ObservableCollection<ReservationVM> _reservations;
         public ObservableCollection<ReservationVM> Reservations
@@ -33,24 +58,33 @@ namespace HotelManagementDesktop.ViewModel
 
         public async void UpdateReservations()
         {
-            string reservations = await HttpRequest.ApiRequests.Get(HttpRequest.ApiUrl.RESERVATIONS, FirstName + "/" + LastName);
+            ReservationSearchInProgress = true;
+            ReservationsFound = false;
+            ReservationsNotFound = false;
 
-            if (reservations.Length < 3)
-                return;
+            string reservationsString = await ApiRequests.Get(ApiUrl.RESERVATIONS_BY_CUSTOMER, _customer.Id);
+                                                                                 
+            if (reservationsString.Length < 3)
+            { // No reservations
+                ReservationsNotFound = true;
+                ReservationSearchInProgress = false;
+            }
 
-            Console.WriteLine(reservations);
-
+            ReservationsFound = true;
+            ReservationSearchInProgress = false;
+            ReservationsNotFound = false;
             
-            // FIXXX
-            //List<.Reservation> co = HttpRequest.JsonSerializer<.Reservation>.DeSerializeAsList(reservations);
-            //var a = co.ToList<.Reservation>();
+            List<ReservationDTO> reservationsList = JsonSerializer<ReservationDTO>.DeSerializeAsList(reservationsString);
+            ObservableCollection<ReservationVM> collection = new ObservableCollection<ReservationVM>();
 
-            //ObservableCollection <ReservationVM> collection = new ObservableCollection<ReservationVM>();
-            //collection.Add(new ReservationVM(co));
-            //foreach (.Reservation c in a)
-            //    collection.Add(new ReservationVM(c));
+            foreach (ReservationDTO c in reservationsList)
+            {
+                Reservation newReservation = new Reservation();
+                newReservation.FromReservationDTO(c);
+                collection.Add(new ReservationVM(newReservation));
+            }
 
-            //Reservations = collection;
+            Reservations = collection;
         }
 
         void deleteReservation(ReservationVM a)

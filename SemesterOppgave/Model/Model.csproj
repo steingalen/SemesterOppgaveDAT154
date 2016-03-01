@@ -41,6 +41,7 @@
     <Compile Include="MakeReservation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs" />
+    <Compile Include="ReservationDTO.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomBeds.cs" />
     <Compile Include="RoomQuality.cs" />
