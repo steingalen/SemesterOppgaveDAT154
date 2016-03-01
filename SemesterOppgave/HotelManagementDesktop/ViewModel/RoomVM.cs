@@ -4,9 +4,9 @@ namespace HotelManagementDesktop.ViewModel
 {
     class RoomVM : BasePropertyChanged
     {
-        Room _room;
+        internal Room Room;
 
-        public int RoomNumber { get { return _room.Id; } set { _room.Id = value;  NotifyPropertyChanged(); } }
+        public int RoomNumber { get { return Room.Id; } set { Room.Id = value;  NotifyPropertyChanged(); } }
 
         RoomSizeVM _roomSize;
         public RoomSizeVM RoomSize { get { return _roomSize; } set { _roomSize = value;  NotifyPropertyChanged(); } }
@@ -19,7 +19,7 @@ namespace HotelManagementDesktop.ViewModel
 
         public RoomVM(Room room)
         {
-            _room = room;
+            Room = room;
 
             _roomSize = new RoomSizeVM(room.Size);
             _roomBeds = new RoomBedsVM(room.Beds);

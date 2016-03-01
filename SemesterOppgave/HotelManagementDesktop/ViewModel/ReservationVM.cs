@@ -9,7 +9,7 @@ namespace HotelManagementDesktop.ViewModel
         Reservation _reservation;
 
         RoomVM _room;
-        public RoomVM Room { get { return _room; } set { _room = value; NotifyPropertyChanged(); } }
+        public RoomVM Room { get { return _room; } set {_room = value; NotifyPropertyChanged(); } }
 
         CustomerVM _customer;
         public CustomerVM Customer { get { return _customer; } set { _customer = value;  NotifyPropertyChanged(); } }
@@ -18,29 +18,47 @@ namespace HotelManagementDesktop.ViewModel
 
         public DateTime Slutt { get { return _reservation.Slutt; } set { _reservation.Slutt = value; NotifyPropertyChanged(); } }
 
-        #region Functions
         public async void DeleteReservation()
         {
-            if (_reservation.Id != 0)
+            if (_reservation.Id != 0) // Valid Id, which means it exists in database
+                await ApiRequests.Delete(ApiUrl.RESERVATIONS, _reservation.Id);
+        }
+
+        public bool UpdateCreateReservation()
+        {
+            // Maybe check validity, i.e. if Room is set
+            updateCreateReservation();
+
+            return true;
+        }
+
+        private async void updateCreateReservation()
+        {
+            if (_reservation.Id != 0) // Existing reservation, update
             {
-                var p = await ApiRequests.Delete(ApiUrl.RESERVATIONS, _reservation.Id);
-                Console.WriteLine(p);
+                await
+                    ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id,
+                        JsonSerializer<Reservation>.Serialize(_reservation));
+            }
+            else // Create new reservation, receive and use as base object, then update with room/customer
+            {
+                MakeReservation create = new MakeReservation() {Email = Customer.Email, Start = Start, End = Slutt};
+                string newResString = await ApiRequests.Get(ApiUrl.MAKE_RESERVATION, JsonSerializer<MakeReservation>.Serialize(create));
+                Reservation newReservation = JsonSerializer<Reservation>.DeSerialize(newResString);
+
+                _reservation = newReservation;
+
+                if(Customer != null)
+                    _reservation.Customer = Customer.Customer;
+
+                if (Room != null)
+                    _reservation.Room = Room.Room;
+
+                await ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id,
+                        JsonSerializer<Reservation>.Serialize(_reservation));
             }
         }
 
-        public async void UpdateCreateReservation()
-        {
-            // Find out if already in DB?? Then add/update
-            if (_reservation.Id != 0)
-                await ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id, JsonSerializer<Reservation>.Serialize(_reservation));
-            else
-                await ApiRequests.Post(ApiUrl.RESERVATIONS, JsonSerializer<Reservation>.Serialize(_reservation));
-        }
-        #endregion Functions
-
-        #region Commands
-        
-        #endregion Commands
         public ReservationVM(Reservation reservation)
         {
             _reservation = reservation;
