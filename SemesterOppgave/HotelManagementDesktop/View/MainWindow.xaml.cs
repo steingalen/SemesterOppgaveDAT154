@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,14 +34,11 @@ namespace HotelManagementDesktop
 
         private void findRoomClick(object sender, RoutedEventArgs e)
         {
-            if (reservListView.SelectedItem == null)
-                return;
+            Reservations.IsEnabled = false;
+            Reservations.Visibility = Visibility.Hidden;
 
-            reservations.IsEnabled = false;
-            reservations.Visibility = Visibility.Hidden;
-
-            roomPicker.IsEnabled = true;
-            roomPicker.Visibility = Visibility.Visible;
+            RoomPicker.IsEnabled = true;
+            RoomPicker.Visibility = Visibility.Visible;
         }
     }
 }

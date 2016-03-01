@@ -86,7 +86,6 @@
     <Compile Include="ViewModel\ReservationVM.cs" />
     <Compile Include="ViewModel\RoomBedsVM.cs" />
     <Compile Include="ViewModel\RoomQualityVM.cs" />
-    <Compile Include="ViewModel\RoomSearchVM.cs" />
     <Compile Include="ViewModel\RoomSizeVM.cs" />
     <Compile Include="ViewModel\RoomTaskVM.cs" />
     <Compile Include="ViewModel\RoomVM.cs" />

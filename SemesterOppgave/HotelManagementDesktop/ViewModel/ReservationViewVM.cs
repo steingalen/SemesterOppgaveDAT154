@@ -23,7 +23,6 @@ namespace HotelManagementDesktop.ViewModel
             set
             {
                 _activeCustomer = value;
-                UpdateReservations();
                 NotifyPropertyChanged();
             }
         }
@@ -51,24 +50,33 @@ namespace HotelManagementDesktop.ViewModel
         }
         #endregion
         #region SearchString
-        string _customerSearchEmail;
+        string _customerSearchEmail = "";
         public string CustomerEmail { get { return _customerSearchEmail; } set { _customerSearchEmail = value; NotifyPropertyChanged(); } }
         #endregion
         #region Functions
         async void customerSearch()
         {
+            if (CustomerEmail.Length < 1)
+                return;
+
             CustomerFound = false;
             CustomerNotFound = false;
             CustomerSearchInProgress = true;
 
             string response = await ApiRequests.Post(ApiUrl.CUSTOMER_SEARCH, "{\"Email\":\"" + CustomerEmail + "\"}");
 
-            Customer customer = HttpRequest.JsonSerializer<Customer>.DeSerialize(response);
-            Console.Write(customer + "  " + customer.FirstName);
-            if (customer.Id != 0)
+            if (response.Length > 0) // Empty response = no hits, nothing to serialize
             {
-                CustomerFound = true;
-                ActiveCustomer = new CustomerVM(customer);
+                Customer customer = HttpRequest.JsonSerializer<Customer>.DeSerialize(response);
+
+                if (customer.Id != 0)
+                {
+                    CustomerFound = true;
+                    ActiveCustomer = new CustomerVM(customer);
+                    updateReservations();
+                }
+                else
+                    CustomerNotFound = true;
             }
             else
                 CustomerNotFound = true;
@@ -172,17 +180,16 @@ namespace HotelManagementDesktop.ViewModel
             Reservations = collection;
         }
 
-        void deleteReservation()
+        async void deleteReservation()
         {
-            
-            
+            await ActiveReservation.DeleteReservation();
 
-            
+            updateReservations();
         }
 
-        void updateCreateReservation()
+        async void updateCreateReservation()
         {
-            a.UpdateCreateReservation();
+            await ActiveReservation.UpdateCreateReservation();
 
             updateReservations();
         }

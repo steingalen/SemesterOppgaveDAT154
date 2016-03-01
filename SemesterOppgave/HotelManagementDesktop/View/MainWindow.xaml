@@ -43,7 +43,7 @@
 
                 <ContentControl Name="ReservationSearch">
                     <Grid>
-                        <ListView x:Name="ListView" ItemsSource="{Binding ActiveCustomer.Reservations}" HorizontalAlignment="Left" Height="259" Margin="15,254,0,0" VerticalAlignment="Top" Width="375"
+                        <ListView x:Name="ListView" ItemsSource="{Binding Reservations}" HorizontalAlignment="Left" Height="259" Margin="15,254,0,0" VerticalAlignment="Top" Width="375"
                           IsEnabled="{Binding Reservations.Count}" SelectedItem="{Binding ActiveReservation}">
                             <ListView.View>
                                 <GridView>
@@ -57,31 +57,32 @@
                             IsEnabled="{Binding ActiveCustomer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </Grid>
                 </ContentControl>
-
-                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="466,282,0,0" VerticalAlignment="Top" Width="253">
+                
+                <ContentControl Name="Reservation" IsEnabled="{Binding SelectedItems.Count, ElementName=ListView}">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60*"/>
-                            <RowDefinition Height="7*"/>
-                        </Grid.RowDefinitions>
-                        <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding SelectedItem.Room.RoomNumber, ElementName=reservListView}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
-                        <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"
-                                IsEnabled="{Binding SelectedItems.Count, ElementName=reservListView}"
-                                Command="{Binding roomSearchVM.OpenRoomSearch}" CommandParameter="{Binding SelectedItem, ElementName=reservListView}"/>
-                        <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
-                        <DatePicker Text="{Binding SelectedItem.Start, ElementName=reservListView, Mode=TwoWay, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186" IsEnabled="{Binding SelectedItems.Count, ElementName=reservListView}" SelectedDateFormat="Long"/>
-                        <DatePicker Text="{Binding SelectedItem.Slutt, ElementName=reservListView, Mode=TwoWay, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186" IsEnabled="{Binding SelectedItems.Count, ElementName=reservListView}" SelectedDateFormat="Long"/>
-                        <Button x:Name="reservConfirmReservation" Content="Confirm Reservation" HorizontalAlignment="Left" Margin="0,31,0,-32" VerticalAlignment="Top" Width="120"
-                                IsEnabled="{Binding SelectedItems.Count, ElementName=reservListView}"
-                                Command="{Binding ActiveCustomer.UpdateCreateReservation}" CommandParameter="{Binding SelectedItem, ElementName=reservListView}" RenderTransformOrigin="-1.908,9.955" Grid.Row="1"/>
-                        <Button x:Name="reservCancelReservation" Content="Delete Reservation" HorizontalAlignment="Left" Margin="125,31,0,-32" VerticalAlignment="Top" Width="116"
-                                IsEnabled="{Binding SelectedItems.Count, ElementName=reservListView}"
-                                Command="{Binding ActiveCustomer.DeleteReservation}" CommandParameter="{Binding SelectedItem, ElementName=reservListView}" Grid.Row="1"/>
+                        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="466,282,0,0" VerticalAlignment="Top" Width="253">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60*"/>
+                                <RowDefinition Height="7*"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding ActiveReservation.Room.RoomNumber}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+                            <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"
+                                    Command="{Binding OpenRoomSearch}"/>
+                            <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
+                            <DatePicker Text="{Binding ActiveReservation.Start, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186" SelectedDateFormat="Long"/>
+                            <DatePicker Text="{Binding ActiveReservation.Slutt, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186" SelectedDateFormat="Long"/>
+                            <Button x:Name="reservConfirmReservation" Content="Confirm Reservation" HorizontalAlignment="Left" Margin="0,31,0,-32" VerticalAlignment="Top" Width="120"
+                                    Command="{Binding UpdateCreateReservation}" RenderTransformOrigin="-1.908,9.955" Grid.Row="1"/>
+                            <Button x:Name="reservCancelReservation" Content="Delete Reservation" HorizontalAlignment="Left" Margin="125,31,0,-32" VerticalAlignment="Top" Width="116"
+                                    Command="{Binding DeleteReservation}" Grid.Row="1"/>
+                        </Grid>
+                        </Border>
                     </Grid>
-                </Border>
+                </ContentControl>
             </Grid>
         </ContentControl>
         

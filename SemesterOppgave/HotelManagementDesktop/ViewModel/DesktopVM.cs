@@ -23,7 +23,5 @@ namespace HotelManagementDesktop
         #endregion Members
         */
         public ReservationViewVM ReservationVM { get; set; } = new ReservationViewVM();
-
-        public RoomSearchVM roomSearchVM { get; set; } = new RoomSearchVM();
     }
 }
