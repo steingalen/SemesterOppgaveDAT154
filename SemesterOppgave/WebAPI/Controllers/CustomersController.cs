@@ -15,6 +15,7 @@ namespace WebAPI.Controllers
         private WebAPIContext db = new WebAPIContext();
         
         // GET: api/Customers
+        [HttpGet]
         public IQueryable<Customer> GetCustomers()
         {
             return db.Customers;
@@ -22,6 +23,7 @@ namespace WebAPI.Controllers
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
+        [HttpGet]
         public async Task<IHttpActionResult> GetCustomer(int id)
         {
             Customer customer = await db.Customers.FindAsync(id);
@@ -35,19 +37,24 @@ namespace WebAPI.Controllers
 
         // Post: api/Customers/email
         [ResponseType(typeof(Customer))]
-        [Route("api/customers/search")]
-        public async Task<IHttpActionResult> PostCustomerByMail(Customer c) {
-            Customer customer = await db.Customers.FirstAsync(cust => cust.Email == c.Email);
-            if (customer == null)
-            {
+        [HttpPost]
+        [Route("api/customerssearch")]
+        public async Task<IHttpActionResult> Search(Customer c) {
+            try {
+                Customer customer = await db.Customers.FirstAsync(cust => cust.Email == c.Email);
+                if (customer == null) {
+                    return NotFound();
+                }
+
+                return Ok(customer);
+            } catch (System.InvalidOperationException) {
                 return NotFound();
             }
-
-            return Ok(customer);
         }
 
         // PUT: api/Customers/5
         [ResponseType(typeof(void))]
+        [HttpPut]
         public async Task<IHttpActionResult> PutCustomer(int id, Customer customer)
         {
             if (!ModelState.IsValid)
@@ -83,6 +90,8 @@ namespace WebAPI.Controllers
 
         // POST: api/Customers
         [ResponseType(typeof(Customer))]
+        [HttpPost]
+        [Route("api/customers/")]
         public async Task<IHttpActionResult> PostCustomer(Customer customer)
         {
             if (!ModelState.IsValid)
@@ -97,6 +106,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
+        [HttpDelete]
         public async Task<IHttpActionResult> DeleteCustomer(int id)
         {
             Customer customer = await db.Customers.FindAsync(id);

@@ -14,7 +14,7 @@
         public static readonly string MAKE_RESERVATION = _baseUri + "makereservations/";
         public static readonly string RESERVATIONS_BY_CUSTOMER = _baseUri + "reservations/customer/";
         public static readonly string ROOM_TASKS_BY_ROOM = _baseUri + "roomtask/room/";
-        public static readonly string CUSTOMER_SEARCH = _baseUri + "customers/search/";
+        public static readonly string CUSTOMER_SEARCH = _baseUri + "customerssearch";
 
         
 

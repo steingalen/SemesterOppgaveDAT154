@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Models;
 using WebAPI.Models;
+using static System.Web.Mvc.HttpVerbs;
 
 namespace WebAPI.Controllers
 {
@@ -37,7 +38,7 @@ namespace WebAPI.Controllers
 
         // GET: api/Reservations/fornavn/etternavn
         [ResponseType(typeof(Reservation))]
-        [Route("api/reservations/{firstname}/{lastname}")]
+        [System.Web.Http.Route("api/reservations/{firstname}/{lastname}")]
         public async Task<IHttpActionResult> GetReservations(string firstname, string lastname) {
             var customer = await db.Customers.FirstAsync((x => x.FirstName == firstname && x.LastName == lastname));
 
@@ -58,30 +59,10 @@ namespace WebAPI.Controllers
         
         // GET: api/Reservations/email
         [ResponseType(typeof(Reservation))]
-        [Route("api/reservations/customer/{id}")]
+        [System.Web.Http.Route("api/reservations/customer/{id}")]
         public async Task<IHttpActionResult> GetReservations(int id)
         {
             var customer = await db.Customers.FirstAsync((x => x.Id == id));
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            var reservation = db.Reservations.Where(x => x.CustomerId == customer.Id);
-            if (!reservation.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(reservation);
-        }
-
-        // GET: api/Reservations/email
-        [ResponseType(typeof(Reservation))]
-        [Route("api/reservations/{email}/")]
-        public async Task<IHttpActionResult> GetReservations(string email)
-        {
-            var customer = await db.Customers.FirstAsync((x => x.Email == email));
             if (customer == null)
             {
                 return NotFound();
@@ -133,7 +114,7 @@ namespace WebAPI.Controllers
 
         // POST: api/Reservations
         [ResponseType(typeof(Reservation))]
-        [Route("api/makereservations", Name= "MakeReservation")]
+        [System.Web.Http.Route("api/makereservations", Name= "MakeReservation")]
         public async Task<IHttpActionResult> PostReservation(MakeReservation makeReservation)
         {
             if (!ModelState.IsValid)
@@ -245,8 +226,8 @@ namespace WebAPI.Controllers
         }
 
         // DELETE: api/Reservations/5
-        [HttpDelete]
         [ResponseType(typeof(Reservation))]
+        [HttpDelete]
         public async Task<IHttpActionResult> DeleteReservation(int id)
         {
             Reservation reservation = await db.Reservations.FindAsync(id);
