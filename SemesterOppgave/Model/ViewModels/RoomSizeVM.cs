@@ -2,11 +2,11 @@
 
 namespace Models.ViewModels
 {
-    class RoomSizeVM : BasePropertyChanged
+    public class RoomSizeVM : BasePropertyChanged
     {
         RoomSize _roomSize;
 
-        internal int Id { get { return _roomSize.Id; } }
+        public int Id { get { return _roomSize.Id; } }
 
         public string Size { get { return _roomSize.Size; } set { _roomSize.Size = value; NotifyPropertyChanged(); } }
 

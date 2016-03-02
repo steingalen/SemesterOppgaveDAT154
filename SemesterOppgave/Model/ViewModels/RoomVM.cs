@@ -2,9 +2,9 @@
 
 namespace Models.ViewModels
 {
-    class RoomVM : BasePropertyChanged
+    public class RoomVM : BasePropertyChanged
     {
-        internal Room Room;
+        Room Room;
 
         public int RoomNumber { get { return Room.Id; } set { Room.Id = value;  NotifyPropertyChanged(); } }
 

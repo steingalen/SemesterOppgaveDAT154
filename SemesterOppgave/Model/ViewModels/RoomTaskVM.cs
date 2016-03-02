@@ -2,7 +2,7 @@
 
 namespace Models.ViewModels
 {
-    class RoomTaskVM : BasePropertyChanged
+    public class RoomTaskVM : BasePropertyChanged
     {
         RoomTask _roomTask;
 

@@ -2,11 +2,11 @@
 
 namespace Models.ViewModels
 {
-    class RoomQualityVM : BasePropertyChanged
+    public class RoomQualityVM : BasePropertyChanged
     {
         RoomQuality _roomQuality;
 
-        internal int Id { get { return _roomQuality.Id; } }
+        public int Id { get { return _roomQuality.Id; } }
 
         public string Quality { get { return _roomQuality.Quality; } set { _roomQuality.Quality = value; NotifyPropertyChanged(); } }
 

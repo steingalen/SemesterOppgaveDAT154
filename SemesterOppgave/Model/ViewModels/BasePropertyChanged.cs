@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models.ViewModels
 {
-    class BasePropertyChanged : INotifyPropertyChanged
+    public class BasePropertyChanged : INotifyPropertyChanged
     {
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

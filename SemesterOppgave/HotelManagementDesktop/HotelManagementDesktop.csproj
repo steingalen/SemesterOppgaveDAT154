@@ -78,18 +78,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\BasePropertyChanged.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\CustomerVM.cs" />
     <Compile Include="ViewModel\DesktopVM.cs" />
     <Compile Include="ViewModel\ReservationViewVM.cs" />
     <Compile Include="ViewModel\ReservationVM.cs" />
-    <Compile Include="ViewModel\RoomBedsVM.cs" />
-    <Compile Include="ViewModel\RoomQualityVM.cs" />
-    <Compile Include="ViewModel\RoomSizeVM.cs" />
-    <Compile Include="ViewModel\RoomTaskVM.cs" />
-    <Compile Include="ViewModel\RoomVM.cs" />
-    <Compile Include="ViewModel\TaskTypeVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

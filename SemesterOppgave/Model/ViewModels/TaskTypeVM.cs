@@ -2,7 +2,7 @@
 
 namespace Models.ViewModels
 {
-    class TaskTypeVM : BasePropertyChanged
+    public class TaskTypeVM : BasePropertyChanged
     {
         TaskType _taskType;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Models;
+using Models.ViewModels;
 using HttpRequest;
 using System.Threading.Tasks;
 
