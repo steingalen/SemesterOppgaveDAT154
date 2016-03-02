@@ -19,6 +19,8 @@ namespace HotelManagementDesktop.ViewModel
 
         public DateTime Slutt { get { return _reservation.Slutt; } set { _reservation.Slutt = value; NotifyPropertyChanged(); } }
 
+        #region Functions
+
         public async Task<bool> DeleteReservation()
         {
             if (_reservation.Id != 0) // Valid Id, which means it exists in database
@@ -45,10 +47,16 @@ namespace HotelManagementDesktop.ViewModel
             }
             else // Create new reservation, receive and use as base object, then update with room/customer
             {
-                MakeReservation create = new MakeReservation() {Email = Customer.Email, Beds = 2, Start = Start, End = Slutt, Quality = "Any", Size = "Any"};
+                MakeReservation create = new MakeReservation() { Email = Customer.Email, Beds = 2, Start = Start, End = Slutt, Quality = "Any", Size = "Any" };
                 string json = JsonSerializer<MakeReservation>.Serialize(create);
-                string newResString = await ApiRequests.Get(ApiUrl.MAKE_RESERVATION, JsonSerializer<MakeReservation>.Serialize(create));
-                Reservation newReservation = JsonSerializer<Reservation>.DeSerialize(newResString);
+                string newResString = await ApiRequests.Post(ApiUrl.MAKE_RESERVATION, JsonSerializer<MakeReservation>.Serialize(create));
+
+                if (newResString.Length == 0) // No reservation available??
+                    return true;
+
+                ReservationDTO newReservationDTO = JsonSerializer<ReservationDTO>.DeSerialize(newResString);
+                Reservation newReservation = new Reservation();
+                newReservation.FromReservationDTO(newReservationDTO);
 
                 _reservation = newReservation;
 
@@ -59,10 +67,14 @@ namespace HotelManagementDesktop.ViewModel
                     await ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id,
                         JsonSerializer<Reservation>.Serialize(_reservation));
                 }
+                else
+                    _reservation.Room = null; // Reservation could return room
             }
 
             return true;
         }
+
+        #endregion
 
         public ReservationVM(Reservation reservation)
         {

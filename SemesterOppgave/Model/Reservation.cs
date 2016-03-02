@@ -35,8 +35,10 @@ namespace Models {
 
         public Reservation()
         {
-            Start = DateTime.Today;
-            Slutt = DateTime.Today;
+            Start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            Slutt = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day);
+            
         }
     }
 }

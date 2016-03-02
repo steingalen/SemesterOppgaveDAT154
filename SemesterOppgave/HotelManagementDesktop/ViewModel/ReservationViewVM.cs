@@ -145,6 +145,9 @@ namespace HotelManagementDesktop.ViewModel
         #region Functions
         void newReservation()
         {
+            if (ActiveCustomer == null)
+                return;
+
             ReservationVM newReservation = new ReservationVM(ActiveCustomer);
             Reservations.Add(newReservation);
         }
