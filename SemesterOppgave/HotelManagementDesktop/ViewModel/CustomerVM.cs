@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Models;
-using HttpRequest;
-using System.Collections.Generic;
+﻿using Models;
+using Models.ViewModels;
 
 namespace HotelManagementDesktop.ViewModel
 {

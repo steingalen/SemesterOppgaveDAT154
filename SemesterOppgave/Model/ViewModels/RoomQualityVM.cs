@@ -19,7 +19,7 @@ namespace Models.ViewModels
             return anyVM;
         }
 
-        internal RoomQualityVM(RoomQuality roomQuality)
+        public RoomQualityVM(RoomQuality roomQuality)
         {
             _roomQuality = roomQuality;
         }

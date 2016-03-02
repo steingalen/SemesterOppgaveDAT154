@@ -19,7 +19,7 @@ namespace Models.ViewModels
             return anyVM;
         }
 
-        internal RoomSizeVM(RoomSize roomSize)
+        public RoomSizeVM(RoomSize roomSize)
         {
             _roomSize = roomSize;
         }

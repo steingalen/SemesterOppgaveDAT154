@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Models;
+using Models.ViewModels;
 using HttpRequest;
 using System;
-using System.Runtime.Serialization;
 
 namespace HotelManagementDesktop.ViewModel
 {

@@ -1,5 +1,5 @@
 ﻿using HotelManagementDesktop.ViewModel;
-using Models;
+using Models.ViewModels;
 
 namespace HotelManagementDesktop
 {
