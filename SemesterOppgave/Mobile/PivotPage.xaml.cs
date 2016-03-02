@@ -1,22 +1,8 @@
 ﻿using Mobile.Common;
-using Mobile.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using HttpRequest;
 using Mobile.DataModel;
@@ -31,7 +17,6 @@ namespace Mobile
         private const string SecondGroupName = "RoomTasks";
 
         private readonly NavigationHelper _navigationHelper;
-        private readonly ResourceLoader _resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
         public PivotPage()
         {
@@ -41,7 +26,6 @@ namespace Mobile
 
             this._navigationHelper = new NavigationHelper(this);
             this._navigationHelper.LoadState += this.NavigationHelper_LoadRoles;
-            this._navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
         /// <summary>
@@ -88,73 +72,9 @@ namespace Mobile
 
             // this.DefaultViewModel[FirstGroupName] = tasks;
         }
+        
 
-        // Gjøre dette om til en egen klasse?????
-        /*
-        private StackPanel CreateTaskStacPanel()
-        {
-            var root = new StackPanel()
-            {
-                Orientation = Orientation.Vertical
-            };
-
-            var titleStackPanel = new StackPanel()
-            {
-                Orientation = Orientation.Horizontal
-            };
-
-            var titleTextBlockRoomNr = new TextBlock()
-            {
-                Text = "Room nr",
-                FontSize = 30
-            };
-
-            var titleTextBlockStatus = new TextBlock()
-            {
-                Text = "Status",
-                FontSize = 30
-            };
-
-            var titleTextBlockComments = new TextBlock()
-            {
-                Text = "Comments",
-                FontSize = 30
-            };
-
-            titleStackPanel.Children.Add(titleTextBlockRoomNr);
-            titleStackPanel.Children.Add(titleTextBlockStatus);
-            titleStackPanel.Children.Add(titleTextBlockComments);
-
-            var listView = new ListView()
-            {
-                ItemsSource = RoomTasks,
-                IsItemClickEnabled = true,
-                ItemTemplate = new DataTemplate() {
-                    C
-                }
-            };
-            listView.ItemClick += ChooseRole; // Dette er feil..
-
-            return root;
-        }
-
- */
-
-
-
-
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache. Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/>.</param>
-        /// <param name="e">Event data that provides an empty dictionary to be populated with
-        /// serializable state.</param>
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
-            // TODO: Save the unique state of the page here.
-        }
+        
 
         /// <summary>
         /// Adds an item to the list when the app bar button is clicked.

@@ -9,87 +9,27 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Margin = "0,0,0,9.5" Orientation = "Vertical" >
-
-        <StackPanel Margin = "0,0,0,9.5" Orientation = "Horizontal" >
-
-            <TextBlock
-
-                        Text = "Room nr"
-
-                        Pivot.SlideInAnimationGroup = "1"
-
-                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                        Style = "{StaticResource ListViewItemTextBlockStyle}" FontSize = "29.333" />
-
-            <TextBlock
-
-                        Text = "Status"
-
-                        Pivot.SlideInAnimationGroup = "2"
-
-                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                        Style = "{StaticResource ListViewItemContentTextBlockStyle}" FontSize = "29.333" />
-
-            <TextBlock
-
-                        Text = "Comments"
-
-                        Pivot.SlideInAnimationGroup = "3"
-
-                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                        Style = "{StaticResource ListViewItemContentTextBlockStyle}" FontSize = "29.333" />
-
-        </StackPanel >
-
-
-        <ListView
-                    x:Name="RoomTasksListView"
-
-                    IsItemClickEnabled = "True"
-
-
-                    ContinuumNavigationTransitionInfo.ExitElementContainer = "True" >
-            <ListView.ItemTemplate >
-                <DataTemplate >
-                    <StackPanel Margin = "0,0,0,9.5" Orientation = "Vertical" >
-
-                        <StackPanel Margin = "0,0,0,9.5" Orientation = "Horizontal" >
-
-                            <TextBlock
-
-                                        Text = "{Binding RoomId}"
-
-                                        Pivot.SlideInAnimationGroup = "1"
-
-                                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                                        Style = "{StaticResource ListViewItemTextBlockStyle}" />
-                            <TextBlock
-
-                                        Text = "{Binding Status}"
-
-                                        Pivot.SlideInAnimationGroup = "1"
-
-                                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                                        Style = "{StaticResource ListViewItemTextBlockStyle}" />
-                            <TextBlock
-
-                                        Text = "{Binding Comments}"
-
-                                        Pivot.SlideInAnimationGroup = "1"
-
-                                        CommonNavigationTransitionInfo.IsStaggerElement = "True"
-
-                                        Style = "{StaticResource ListViewItemTextBlockStyle}" />
-                        </StackPanel >
-                    </StackPanel >
-                </DataTemplate >
-            </ListView.ItemTemplate >
-        </ListView >
-    </StackPanel >
+    <ListView x:Name="RoomTasksListView" ItemClick="TaskClicked">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Grid HorizontalAlignment="Left" Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" Text="Room"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" FontWeight="Bold" Text="Status"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="18" FontWeight="Bold" Text="Comments"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="18" Text="{Binding RoomId}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Text="{Binding Status}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" FontSize="18" TextWrapping="WrapWholeWords" Text="{Binding Comments}"/>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </UserControl>
