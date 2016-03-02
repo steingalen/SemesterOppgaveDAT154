@@ -9,13 +9,13 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <ListView x:Name="RoomTasksListView" ItemClick="TaskClicked">
+    <ListView x:Name="RoomTasksListView" ItemsSource="{Binding Items}" IsItemClickEnabled="True" SelectedItem="{Binding ActiveRoomTask}" ItemClick="TaskClicked" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <Grid HorizontalAlignment="Left" Margin="0,0,0,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60" />
@@ -25,9 +25,9 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" Text="Room"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" FontWeight="Bold" Text="Status"/>
                     <TextBlock Grid.Row="0" Grid.Column="2" FontSize="18" FontWeight="Bold" Text="Comments"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="18" Text="{Binding RoomId}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Text="{Binding Status}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="2" FontSize="18" TextWrapping="WrapWholeWords" Text="{Binding Comments}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="18" Text="{Binding RoomTask.RoomId}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Text="{Binding RoomTask.Status}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" FontSize="18" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" Text="{Binding RoomTask.Comments}"/>
                 </Grid>
             </DataTemplate>
         </ListView.ItemTemplate>

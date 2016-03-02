@@ -1,10 +1,13 @@
 ﻿using Mobile.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using HttpRequest;
+using Mobile.Data;
 using Mobile.DataModel;
 using Models;
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
@@ -17,6 +20,7 @@ namespace Mobile
         private const string SecondGroupName = "RoomTasks";
 
         private readonly NavigationHelper _navigationHelper;
+        private readonly ResourceLoader _resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
         public PivotPage()
         {
@@ -41,7 +45,6 @@ namespace Mobile
         /// This can be changed to a strongly typed view model.
         /// </summary>
         public ObservableDictionary DefaultViewModel { get; } = new ObservableDictionary();
-        public List<TaskType> TaskTypes { get; private set; } = new List<TaskType>();
         /// <summary>
         /// Populates the page with content passed during navigation. Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -53,88 +56,75 @@ namespace Mobile
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session. The state will be null the first time a page is visited.</param>
-        private async void NavigationHelper_LoadRoles(object sender, LoadStateEventArgs e)
-        {
-            TaskTypes = JsonSerializer<TaskType>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.TASKTYPES));
+        private async void NavigationHelper_LoadRoles(object sender, LoadStateEventArgs e) {
+            var taskTypeVm = new TaskTypeVM();
+            await taskTypeVm.Populate();
+            DefaultViewModel[FirstGroupName] = taskTypeVm;
 
-            foreach (var taskType in TaskTypes) {
-                var tasks =
-                    JsonSerializer<RoomTask>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.ROOM_TASKS_BY_TASK, taskType.Id));
-                var pi = new PivotItem() {
-                    Header = taskType.Type,
-                    Content = new RoomTaskControl(tasks)
-                };
+            var roomTasks = new RoomTasksVM(taskTypeVm.Items[0].Id);
+            await roomTasks.Populate();
+            DefaultViewModel[SecondGroupName] = roomTasks;
+
+            for (var index = 0; index < taskTypeVm.Items.Count; index++) {
+                
+                var pi = new PivotItem {Header = taskTypeVm.Items[index].Type};
+
+                if (index == 0) {
+                    var v = DefaultViewModel[SecondGroupName] as RoomTasksVM;
+                    {
+                        
+                        var customControl = new RoomTaskControl(v);
+                        pi.Content = customControl;
+                        customControl.TaskClickedEvent += OpenTaskEvent;
+                    }
+                }
+
                 PivotControl.Items.Add(pi);
             }
-
-            //var tasks = new TaskTypeVM();
-            //await tasks.Populate();
-
-            // this.DefaultViewModel[FirstGroupName] = tasks;
+            PivotControl.SelectionChanged += ChooseRole;
         }
-        
 
-        
-
-        /// <summary>
-        /// Adds an item to the list when the app bar button is clicked.
-        /// </summary>
-        private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void OpenTaskEvent(object sender, ItemClickEventArgs e)
         {
-            string groupName = this.PivotControl.SelectedIndex == 0 ? FirstGroupName : SecondGroupName;
-            var group = this.DefaultViewModel[groupName] as TaskTypeVM;
-            var nextItemId = group.Items.Count + 1;
-            //var newItem = new SampleDataItem(
-             //   string.Format(CultureInfo.InvariantCulture, "Group-{0}-Item-{1}", this.pivot.SelectedIndex + 1, nextItemId),
-             //   string.Format(CultureInfo.CurrentCulture, this._resourceLoader.GetString("NewItemTitle"), nextItemId),
-              //  string.Empty,
-              //  string.Empty,
-              //  this._resourceLoader.GetString("NewItemDescription"),
-              //  string.Empty);
+            var task = e.ClickedItem as RoomTaskVM;
 
-          //  group.Items.Add(newItem);
+            if (task == null)
+                return;
+            
+            if (!Frame.Navigate(typeof(ItemPage), task))
+            {
+                throw new Exception(this._resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
 
-            // Scroll the new item into view.
-            var container = this.PivotControl.ContainerFromIndex(this.PivotControl.SelectedIndex) as ContentControl;
-            var listView = container.ContentTemplateRoot as ListView;
-           // listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
         }
 
-
-        private async void ChooseRole(object sender, ItemClickEventArgs e) {
-            var taskType = e.ClickedItem as TaskType;
-
-            if (taskType == null)
+        // Skjer hver gang man navigerer til en ny piviotItem
+        private async void ChooseRole(object sender, RoutedEventArgs e) {
+            var piviot = PivotControl.SelectedItem as PivotItem;
+            
+            if (piviot == null)
                 return;
 
-            var tasks = new RoomTaskVM(taskType.Id);
-            await tasks.Populate();
+            if (piviot.Content != null) {
+                return;
+            }
 
-            this.DefaultViewModel[SecondGroupName] = tasks;
+            var taskTypeVm = DefaultViewModel[FirstGroupName] as TaskTypeVM;
+
+            if (taskTypeVm == null)
+                return;
+           
+            var taskTypeId = taskTypeVm.GetTaskTypeIdBasedOnTaskType(piviot.Header.ToString());
+
+            var roomTasks = new RoomTasksVM(taskTypeId);
+            await roomTasks.Populate();
+            DefaultViewModel[SecondGroupName] = roomTasks;
+            var customControl = new RoomTaskControl(roomTasks);
+            piviot.Content = customControl;
+            customControl.TaskClickedEvent += OpenTaskEvent;
         }
 
-        /// <summary>
-        /// Invoked when an item within a section is clicked.
-        /// </summary>
-        private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            // Navigate to the appropriate destination page, configuring the new page
-            // by passing required information as a navigation parameter
-         //   var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
-         //   if (!Frame.Navigate(typeof(ItemPage), itemId))
-          //  {
-          //      throw new Exception(this._resourceLoader.GetString("NavigationFailedExceptionMessage"));
-          //  }
-        }
 
-        /// <summary>
-        /// Loads the content for the second pivot item when it is scrolled into view.
-        /// </summary>
-        private async void SecondPivot_Loaded(object sender, RoutedEventArgs e)
-        {
-          //  var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-2");
-          //  this.DefaultViewModel[SecondGroupName] = sampleDataGroup;
-        }
 
         #region NavigationHelper registration
 

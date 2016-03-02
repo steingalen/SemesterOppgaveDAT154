@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using HttpRequest;
 using Models;
@@ -16,6 +17,42 @@ namespace Mobile.DataModel
         public async Task Populate() {
             var tasks = JsonSerializer<TaskType>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.TASKTYPES));
             Items = new ObservableCollection<TaskType>(tasks);
+        }
+
+        public int GetTaskTypeIdBasedOnTaskType(string taskType) {
+            var id = -1;
+
+            foreach (var type in Items) {
+                if (type.Type == taskType)
+                    id = type.Id;
+            }
+
+            return id;
+        }
+
+        public string GetTaskTypeBasedOnTaskType(int id)
+        {
+            var type = "";
+
+            foreach (var taskType in Items)
+            {
+                if (taskType.Id == id)
+                    type = taskType.Type;
+            }
+
+            return type;
+        }
+
+        public async Task<List<RoomTask>> GetRoomTasksBasedOnTaskType(string taskType) {
+
+            var taskTypeId = GetTaskTypeIdBasedOnTaskType(taskType);
+
+            if (taskTypeId == -1)
+                return new List<RoomTask>();
+
+            var roomTasks = JsonSerializer<RoomTask>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.ROOM_TASKS_BY_TASK, taskTypeId));
+
+            return roomTasks ?? new List<RoomTask>();
         }
 
 

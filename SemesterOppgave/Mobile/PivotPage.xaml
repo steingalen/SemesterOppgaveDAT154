@@ -19,15 +19,6 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />
-                <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
-            </CommandBar.SecondaryCommands>
-            <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
-        </CommandBar>
-    </Page.BottomAppBar>
 
     <Grid>
         <Pivot x:Uid="Pivot" Title="Title" x:Name="PivotControl" CommonNavigationTransitionInfo.IsStaggerElement="True">
