@@ -11,22 +11,31 @@ namespace HotelManagementDesktop.ViewModel
 
         RoomVM _room;
         public RoomVM Room { get { return _room; }
-            set {
+            set
+            {
+                if (value == null)
+                    return;
+
                 _room = value;
                 _reservation.Room = value.Room;
                 _reservation.RoomId = value.Room.Id;
-                NotifyPropertyChanged(); }
+                NotifyPropertyChanged();
+            }
         }
 
         CustomerVM _customer;
         public CustomerVM Customer { get { return _customer; }
             set
             {
+                if (value == null)
+                    return;
+
                 _customer = value;
                 _reservation.Customer = value.Customer;
                 _reservation.CustomerId = value.Customer.Id;
                 NotifyPropertyChanged();
-            } }
+            }
+        }
 
         public DateTime Start { get { return _reservation.Start; } set { _reservation.Start = value;  NotifyPropertyChanged(); } }
 

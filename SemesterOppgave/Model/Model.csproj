@@ -48,6 +48,13 @@
     <Compile Include="RoomSize.cs" />
     <Compile Include="RoomTask.cs" />
     <Compile Include="TaskType.cs" />
+    <Compile Include="ViewModels\BasePropertyChanged.cs" />
+    <Compile Include="ViewModels\RoomBedsVM.cs" />
+    <Compile Include="ViewModels\RoomQualityVM.cs" />
+    <Compile Include="ViewModels\RoomSizeVM.cs" />
+    <Compile Include="ViewModels\RoomTaskVM.cs" />
+    <Compile Include="ViewModels\RoomVM.cs" />
+    <Compile Include="ViewModels\TaskTypeVM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
