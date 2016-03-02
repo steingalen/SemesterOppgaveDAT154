@@ -57,7 +57,7 @@ namespace Mobile
         /// This can be changed to a strongly typed view model.
         /// </summary>
         public ObservableDictionary DefaultViewModel { get; } = new ObservableDictionary();
-        public List<TaskType> TaskTypes { get; set; }
+        public List<TaskType> TaskTypes { get; private set; } = new List<TaskType>();
         /// <summary>
         /// Populates the page with content passed during navigation. Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -71,12 +71,76 @@ namespace Mobile
         /// session. The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadRoles(object sender, LoadStateEventArgs e)
         {
+            TaskTypes = JsonSerializer<TaskType>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.TASKTYPES));
 
-            var tasks = new TaskTypeVM();
-            await tasks.Populate();
-           
-            this.DefaultViewModel[FirstGroupName] = tasks;
+            foreach (var taskType in TaskTypes) {
+                var tasks =
+                    JsonSerializer<RoomTask>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.ROOM_TASKS_BY_TASK, taskType.Id));
+                var pi = new PivotItem() {
+                    Header = taskType.Type,
+                    Content = new RoomTaskControl(tasks)
+                };
+                PivotControl.Items.Add(pi);
+            }
+
+            //var tasks = new TaskTypeVM();
+            //await tasks.Populate();
+
+            // this.DefaultViewModel[FirstGroupName] = tasks;
         }
+
+        // Gjøre dette om til en egen klasse?????
+        /*
+        private StackPanel CreateTaskStacPanel()
+        {
+            var root = new StackPanel()
+            {
+                Orientation = Orientation.Vertical
+            };
+
+            var titleStackPanel = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal
+            };
+
+            var titleTextBlockRoomNr = new TextBlock()
+            {
+                Text = "Room nr",
+                FontSize = 30
+            };
+
+            var titleTextBlockStatus = new TextBlock()
+            {
+                Text = "Status",
+                FontSize = 30
+            };
+
+            var titleTextBlockComments = new TextBlock()
+            {
+                Text = "Comments",
+                FontSize = 30
+            };
+
+            titleStackPanel.Children.Add(titleTextBlockRoomNr);
+            titleStackPanel.Children.Add(titleTextBlockStatus);
+            titleStackPanel.Children.Add(titleTextBlockComments);
+
+            var listView = new ListView()
+            {
+                ItemsSource = RoomTasks,
+                IsItemClickEnabled = true,
+                ItemTemplate = new DataTemplate() {
+                    C
+                }
+            };
+            listView.ItemClick += ChooseRole; // Dette er feil..
+
+            return root;
+        }
+
+ */
+
+
 
 
         /// <summary>
@@ -97,7 +161,7 @@ namespace Mobile
         /// </summary>
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            string groupName = this.pivot.SelectedIndex == 0 ? FirstGroupName : SecondGroupName;
+            string groupName = this.PivotControl.SelectedIndex == 0 ? FirstGroupName : SecondGroupName;
             var group = this.DefaultViewModel[groupName] as TaskTypeVM;
             var nextItemId = group.Items.Count + 1;
             //var newItem = new SampleDataItem(
@@ -111,14 +175,14 @@ namespace Mobile
           //  group.Items.Add(newItem);
 
             // Scroll the new item into view.
-            var container = this.pivot.ContainerFromIndex(this.pivot.SelectedIndex) as ContentControl;
+            var container = this.PivotControl.ContainerFromIndex(this.PivotControl.SelectedIndex) as ContentControl;
             var listView = container.ContentTemplateRoot as ListView;
            // listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
         }
 
 
         private async void ChooseRole(object sender, ItemClickEventArgs e) {
-            var taskType = e.ClickedItem. as TaskType;
+            var taskType = e.ClickedItem as TaskType;
 
             if (taskType == null)
                 return;

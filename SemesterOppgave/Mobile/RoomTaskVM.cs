@@ -9,7 +9,7 @@ using Models;
 
 namespace Mobile
 {
-    class RoomTaskVM
+    public class RoomTaskVM
     {
         public RoomTaskVM(int taskType)
         {

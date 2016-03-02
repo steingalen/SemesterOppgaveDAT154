@@ -10,7 +10,6 @@
     xmlns:Common="using:Mobile.Common"
     x:Class="Mobile.PivotPage"
     mc:Ignorable="d"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Transitions>
         <TransitionCollection>
@@ -31,103 +30,8 @@
     </Page.BottomAppBar>
 
     <Grid>
-        <Pivot x:Uid="Pivot" Title="MY sc" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
-            <!--Pivot item one-->
-            
-            <PivotItem
-				x:Uid="PivotItem1"
-				Margin="19,14.5,0,0"
-				Header="{Binding Type}"	
-                DataContext="{Binding TaskTypes}"
-				d:DataContext="{Binding Groups[1]}"
-
-				CommonNavigationTransitionInfo.IsStaggerElement="True">
-
-
-                <!--Double line list with text wrapping-->
-                <ListView                 
-					IsItemClickEnabled="True"
-				    ItemsSource="{Binding Items}"
-	
-                    ItemClick="ChooseRole"
-					ContinuumNavigationTransitionInfo.ExitElementContainer="True" Margin="0,63,9.833,106.167">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,9.5">
-                                <TextBlock                   
-									Text="{Binding Type}"
-									TextWrapping="Wrap"
-									Pivot.SlideInAnimationGroup="1"
-									CommonNavigationTransitionInfo.IsStaggerElement="True"
-									Style="{ThemeResource ListViewItemTextBlockStyle}"
-									Margin="0,0,19,0" HorizontalAlignment="Center" FontSize="53.333">
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </PivotItem>
-
-            <!--Pivot item two-->
-            <PivotItem
-				x:Uid="PivotItem2"
-				Margin="0,15,0,-0.667"
-				Header="Tasks"
-				DataContext="{Binding RoomTasks}"
-				d:DataContext="{Binding Groups[1]}">
-                <!--Double line list no text wrapping-->
-                <StackPanel Margin="0,0,0,9.5" Orientation="Vertical">
-                    <StackPanel Margin="0,0,0,9.5" Orientation="Horizontal">
-                        <TextBlock
-					        Text="Room nr"
-					        Pivot.SlideInAnimationGroup="1"
-					        CommonNavigationTransitionInfo.IsStaggerElement="True"
-					        Style="{StaticResource ListViewItemTextBlockStyle}" FontSize="29.333"/>
-                        <TextBlock
-						    Text="Status"
-						    Pivot.SlideInAnimationGroup="2"
-						    CommonNavigationTransitionInfo.IsStaggerElement="True"
-						    Style="{StaticResource ListViewItemContentTextBlockStyle}" FontSize="29.333" />
-                        <TextBlock
-						    Text="Comments"
-						    Pivot.SlideInAnimationGroup="3"
-						    CommonNavigationTransitionInfo.IsStaggerElement="True"
-						    Style="{StaticResource ListViewItemContentTextBlockStyle}" FontSize="29.333"/>
-                    </StackPanel>
-
-                    <ListView
-					    ItemsSource="{Binding Items}"
-					    IsItemClickEnabled="True"
-					    ItemClick="ItemView_ItemClick"
-					    Loaded="SecondPivot_Loaded"
-					    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,9.5" Orientation="Vertical">
-                                    <StackPanel Margin="0,0,0,9.5" Orientation="Horizontal">
-                                        <TextBlock
-									        Text="{Binding RoomId}"
-									        Pivot.SlideInAnimationGroup="1"
-									        CommonNavigationTransitionInfo.IsStaggerElement="True"
-									        Style="{StaticResource ListViewItemTextBlockStyle}"/>
-                                        <TextBlock
-									        Text="{Binding Status}"
-									        Pivot.SlideInAnimationGroup="1"
-									        CommonNavigationTransitionInfo.IsStaggerElement="True"
-									        Style="{StaticResource ListViewItemTextBlockStyle}"/>
-                                        <TextBlock
-									        Text="{Binding Comments}"
-									        Pivot.SlideInAnimationGroup="1"
-									        CommonNavigationTransitionInfo.IsStaggerElement="True"
-									        Style="{StaticResource ListViewItemTextBlockStyle}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-               
-            </PivotItem>
+        <Pivot x:Uid="Pivot" Title="Title" x:Name="PivotControl" CommonNavigationTransitionInfo.IsStaggerElement="True">
+                        
         </Pivot>
     </Grid>
 
