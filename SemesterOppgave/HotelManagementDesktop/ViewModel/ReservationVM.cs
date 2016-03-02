@@ -10,10 +10,23 @@ namespace HotelManagementDesktop.ViewModel
         Reservation _reservation;
 
         RoomVM _room;
-        public RoomVM Room { get { return _room; } set {_room = value; NotifyPropertyChanged(); } }
+        public RoomVM Room { get { return _room; }
+            set {
+                _room = value;
+                _reservation.Room = value.Room;
+                _reservation.RoomId = value.Room.Id;
+                NotifyPropertyChanged(); }
+        }
 
         CustomerVM _customer;
-        public CustomerVM Customer { get { return _customer; } set { _customer = value;  NotifyPropertyChanged(); } }
+        public CustomerVM Customer { get { return _customer; }
+            set
+            {
+                _customer = value;
+                _reservation.Customer = value.Customer;
+                _reservation.CustomerId = value.Customer.Id;
+                NotifyPropertyChanged();
+            } }
 
         public DateTime Start { get { return _reservation.Start; } set { _reservation.Start = value;  NotifyPropertyChanged(); } }
 
@@ -47,7 +60,7 @@ namespace HotelManagementDesktop.ViewModel
             }
             else // Create new reservation, receive and use as base object, then update with room/customer
             {
-                MakeReservation create = new MakeReservation() { Email = Customer.Email, Beds = 2, Start = Start, End = Slutt, Quality = "Any", Size = "Any" };
+                MakeReservation create = new MakeReservation() { Email = Customer.Email, Beds = 0, Start = Start, End = Slutt, Quality = "Any", Size = "Any" };
                 string json = JsonSerializer<MakeReservation>.Serialize(create);
                 string newResString = await ApiRequests.Post(ApiUrl.MAKE_RESERVATION, JsonSerializer<MakeReservation>.Serialize(create));
 

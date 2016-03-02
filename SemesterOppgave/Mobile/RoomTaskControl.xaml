@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <ListView x:Name="RoomTasksListView" ItemsSource="{Binding Items}" IsItemClickEnabled="True" SelectedItem="{Binding ActiveRoomTask}" ItemClick="TaskClicked" >
+    <ListView x:Name="RoomTasksListView" ItemsSource="{Binding Items, Mode=TwoWay}" IsItemClickEnabled="True" SelectedItem="{Binding ActiveRoomTask}" ItemClick="TaskClicked" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <Grid HorizontalAlignment="Left" Margin="0,0,0,10">
@@ -18,8 +18,8 @@
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" Text="Room"/>

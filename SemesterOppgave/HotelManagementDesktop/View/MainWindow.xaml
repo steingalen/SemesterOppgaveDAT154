@@ -16,28 +16,29 @@
                 <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
             </Grid>
         </ContentControl>
-        
-        <ContentControl Name="Reservations" Visibility="Visible" IsEnabled="True" DataContext="{Binding ReservationVM}">
+
+        <ContentControl Name="Reservations" Visibility="Hidden" IsEnabled="True" DataContext="{Binding ReservationVM}">
             <Grid>
                 <ContentControl Name="CustomerSearch">
                     <Grid>
-                    <Label x:Name="reservHeader" Content="Reservations" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="33.333"/>
-                    <TextBlock Margin="15,67,0,0" Text="Customer email" Foreground="LightSteelBlue" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <Label x:Name="reservHeader" Content="Reservations" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="33.333"/>
+                        <TextBlock Margin="15,67,0,0" Text="Customer email" Foreground="LightSteelBlue" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                Height="23" Width="228" Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=reservCustomerSearchBox}" />
-                    <TextBox x:Name="reservCustomerSearchBox" Text="{Binding CustomerEmail, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Background="Transparent"/>
-                    <Button x:Name="reservFindCustomer" Content="Find Customer" Command="{Binding CustomerSearch}" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="102"/>
-                    <Label x:Name="reservCustomerSearchInProgress" Visibility="{Binding CustomerSearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Searching..." HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="reservCustomerNotFound" Visibility="{Binding CustomerNotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Could not find customer" HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
-                    <ContentControl x:Name="reservCustomerOverview" Visibility="{Binding CustomerFound, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Grid HorizontalAlignment="Left" Height="140" Margin="271,69,0,0" VerticalAlignment="Top" Width="409">
-                            <Label x:Name="label5" Content="First Name:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label6" Content="Last Name:" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label7" Content="Email:" HorizontalAlignment="Left" Margin="0,70,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label2" Content="{Binding ActiveCustomer.FirstName }" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label3" Content="{Binding ActiveCustomer.LastName }" HorizontalAlignment="Left" Margin="100,40,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label4" Content="{Binding ActiveCustomer.Email }" HorizontalAlignment="Left" Margin="100,70,0,0" VerticalAlignment="Top"/>
-                        </Grid>
-                    </ContentControl>
+                        <TextBox x:Name="reservCustomerSearchBox" Text="{Binding CustomerEmail, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Background="Transparent"/>
+                        <Button x:Name="reservFindCustomer" Content="Find Customer" Command="{Binding CustomerSearch}" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="102"/>
+                        <Label x:Name="reservCustomerSearchInProgress" Visibility="{Binding CustomerSearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Searching..." HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="reservCustomerNotFound" Visibility="{Binding CustomerNotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Could not find customer" HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
+
+                        <ContentControl x:Name="reservCustomerOverview" Visibility="{Binding CustomerFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid HorizontalAlignment="Left" Height="140" Margin="271,69,0,0" VerticalAlignment="Top" Width="409">
+                                <Label x:Name="label5" Content="First Name:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label6" Content="Last Name:" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label7" Content="Email:" HorizontalAlignment="Left" Margin="0,70,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label2" Content="{Binding ActiveCustomer.FirstName }" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label3" Content="{Binding ActiveCustomer.LastName }" HorizontalAlignment="Left" Margin="100,40,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label4" Content="{Binding ActiveCustomer.Email }" HorizontalAlignment="Left" Margin="100,70,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </ContentControl>
                     </Grid>
                 </ContentControl>
 
@@ -56,7 +57,7 @@
                         <Button Command="{Binding NewReservation}" x:Name="reservNewResrvButton" Content="New Reservation" HorizontalAlignment="Left" Margin="15,518,0,0" VerticalAlignment="Top" Width="105"/>
                     </Grid>
                 </ContentControl>
-                
+
                 <ContentControl Name="Reservation" IsEnabled="{Binding SelectedItems.Count, ElementName=ListView}">
                     <Grid>
                         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="466,282,0,0" VerticalAlignment="Top" Width="253">
@@ -68,12 +69,11 @@
                                 <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding ActiveReservation.Room.RoomNumber}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
-                                <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"
-                                    Command="{Binding OpenRoomSearch}"/>
+                                <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"/>
                                 <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
-                                <DatePicker Name="DatePicker1" SelectedDate="{Binding ActiveReservation.Start}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186"/>
-                                <DatePicker Name="DatePicker2" SelectedDate="{Binding ActiveReservation.Slutt}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186"/>
+                                <DatePicker Name="DatePicker1" IsEnabled="False"  SelectedDate="{Binding ActiveReservation.Start}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186"/>
+                                <DatePicker Name="DatePicker2" IsEnabled="False" SelectedDate="{Binding ActiveReservation.Slutt}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186"/>
                                 <Button x:Name="reservConfirmReservation" Content="Confirm Reservation" HorizontalAlignment="Left" Margin="0,31,0,-32" VerticalAlignment="Top" Width="120"
                                     Command="{Binding UpdateCreateReservation}" RenderTransformOrigin="-1.908,9.955" Grid.Row="1"/>
                                 <Button x:Name="reservCancelReservation" Content="Delete Reservation" HorizontalAlignment="Left" Margin="125,31,0,-32" VerticalAlignment="Top" Width="116"
@@ -84,21 +84,46 @@
                 </ContentControl>
             </Grid>
         </ContentControl>
-        
-        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="False">
+
+        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="True">
             <Grid>
 
             </Grid>
         </ContentControl>
-        
-        <ContentControl Name="RoomPicker" Visibility="Hidden" IsEnabled="False" DataContext="{Binding roomPickerVM}">
+
+        <ContentControl Name="RoomPicker" Visibility="Visible" IsEnabled="True" DataContext="{Binding ReservationVM}">
             <Grid>
-                <Label x:Name="roomPickerHeader" Content="Choose Room" HorizontalAlignment="Left" Margin="218,10,0,0" VerticalAlignment="Top" FontSize="44.444"/>
-                <Label x:Name="roomPickerLabel1" Content="Quality:" HorizontalAlignment="Left" Margin="36,100,0,0" VerticalAlignment="Top"/>
-                <Label x:Name="roomPickerLabel2" Content="Beds:" HorizontalAlignment="Left" Margin="36,120,0,0" VerticalAlignment="Top"/>
-                <Label x:Name="roomPickerLabel3" Content="Size:" HorizontalAlignment="Left" Margin="36,140,0,0" VerticalAlignment="Top"/>
+                <ContentControl Name="SearchField" IsEnabled="{Binding AttributesFound}">
+                    <Grid>
+                        <Label x:Name="RoomPickerHeader" Content="Choose Room" HorizontalAlignment="Left" Margin="218,10,0,0" VerticalAlignment="Top" FontSize="44.444"/>
+                        <Label x:Name="RoomPickerLabel1" Content="Quality:" HorizontalAlignment="Left" Margin="36,94,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="RoomPickerLabel2" Content="Beds:" HorizontalAlignment="Left" Margin="36,120,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="RoomPickerLabel3" Content="Size:" HorizontalAlignment="Left" Margin="36,151,0,0" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="RoomQualityPicker" DisplayMemberPath="Quality" ItemsSource="{Binding RoomQualities}" SelectedItem="{Binding ActiveRoomQuality}" HorizontalAlignment="Left" Margin="114,98,0,0" VerticalAlignment="Top" Width="120"/>
+                        <ComboBox x:Name="RoomBedsPicker" DisplayMemberPath="Beds" ItemsSource="{Binding RoomBeds}" SelectedItem="{Binding ActiveRoomBeds}" HorizontalAlignment="Left" Margin="114,125,0,0" VerticalAlignment="Top" Width="120"/>
+                        <ComboBox x:Name="RoomSizePicker" DisplayMemberPath="Size" ItemsSource="{Binding RoomSizes}" SelectedItem="{Binding ActiveRoomSize}" HorizontalAlignment="Left" Margin="114,152,0,0" VerticalAlignment="Top" Width="120"/>
 
+                        <Label x:Name="RoomPickerLabel4" Content="From Date:" HorizontalAlignment="Left" Margin="322,94,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="RoomPickerLabel5" Content="To Date:" HorizontalAlignment="Left" Margin="322,120,0,0" VerticalAlignment="Top"/>
+                        <DatePicker SelectedDate="{Binding ActiveStartDate}" HorizontalAlignment="Left" Margin="402,96,0,0" VerticalAlignment="Top"/>
+                        <DatePicker SelectedDate="{Binding ActiveEndDate}" HorizontalAlignment="Left" Margin="402,125,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="RoomPickerSearchButton" Command="{Binding StartRoomSearch}" Content="Search" HorizontalAlignment="Left" Margin="36,200,0,0" VerticalAlignment="Top" Width="75"/>
+                    </Grid>
+                </ContentControl>
 
+                <Label x:Name="attributesSearchingLabel" Visibility="{Binding AttributeSearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Loading Attributes..." HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="attributesNotFoundLabel" Visibility="{Binding AttributesNotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Attributes Not Found" HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
+                
+                <ListView x:Name="RoomListView" ItemsSource="{Binding Rooms}" IsEnabled="{Binding RoomsFound}" HorizontalAlignment="Left" Height="205" Margin="36,257,0,0" VerticalAlignment="Top" Width="547">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                
+                <Button x:Name="SelectRoomButton" Content="Select Room" Command="{Binding SelectRoom}" IsEnabled="{Binding SelectedItems.Count, ElementName=RoomListView}" HorizontalAlignment="Left" Margin="36,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
+                <Button x:Name="CancelRoomSelect" Content="Cancel" HorizontalAlignment="Left" Margin="141,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
             </Grid>
         </ContentControl>
     </Grid>

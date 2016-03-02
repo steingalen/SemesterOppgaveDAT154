@@ -14,7 +14,7 @@ namespace HotelManagementDesktop.ViewModel
 
         public string Comments { get { return _roomTask.Comments; } set { _roomTask.Comments = value;  NotifyPropertyChanged(); } }
 
-        public string Status { get { return _roomTask.Status; } set { _roomTask.Status = value;  NotifyPropertyChanged(); } }
+        //public string Status { get { return _roomTask.Status; } set { _roomTask.Status = value;  NotifyPropertyChanged(); } }
 
         public RoomTaskVM(RoomTask roomTask)
         {

@@ -42,5 +42,14 @@ namespace HotelManagementDesktop
             RoomPicker.IsEnabled = true;
             RoomPicker.Visibility = Visibility.Visible;
         }
+
+        private void selectRoomClick(object sender, RoutedEventArgs e)
+        {
+            Reservations.IsEnabled = true;
+            Reservations.Visibility = Visibility.Visible;
+
+            RoomPicker.IsEnabled = false;
+            RoomPicker.Visibility = Visibility.Hidden;
+        }
     }
 }
