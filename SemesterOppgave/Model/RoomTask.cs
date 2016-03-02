@@ -15,7 +15,7 @@ namespace Models {
         [DataMember]
         public virtual TaskType Type { get; set; }
         [DataMember]
-        public int Status { get; set; }
+        public string Status { get; set; }
         [DataMember]
         public string Comments { get; set; }
     }

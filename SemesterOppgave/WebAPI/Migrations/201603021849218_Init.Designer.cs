@@ -7,13 +7,13 @@ namespace WebAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddVirtualOnForeignFields : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddVirtualOnForeignFields));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602240027193_AddVirtualOnForeignFields"; }
+            get { return "201603021849218_Init"; }
         }
         
         string IMigrationMetadata.Source

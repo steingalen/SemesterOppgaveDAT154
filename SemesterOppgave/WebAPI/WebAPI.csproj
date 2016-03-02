@@ -197,21 +197,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602232357516_InitialCreate.cs" />
-    <Compile Include="Migrations\201602232357516_InitialCreate.Designer.cs">
-      <DependentUpon>201602232357516_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602240022225_Initial.cs" />
-    <Compile Include="Migrations\201602240022225_Initial.Designer.cs">
-      <DependentUpon>201602240022225_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602240027193_AddVirtualOnForeignFields.cs" />
-    <Compile Include="Migrations\201602240027193_AddVirtualOnForeignFields.Designer.cs">
-      <DependentUpon>201602240027193_AddVirtualOnForeignFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602240036255_AddVirtualOnForeignFieldsOnAll.cs" />
-    <Compile Include="Migrations\201602240036255_AddVirtualOnForeignFieldsOnAll.Designer.cs">
-      <DependentUpon>201602240036255_AddVirtualOnForeignFieldsOnAll.cs</DependentUpon>
+    <Compile Include="Migrations\201603021849218_Init.cs" />
+    <Compile Include="Migrations\201603021849218_Init.Designer.cs">
+      <DependentUpon>201603021849218_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\WebAPIContext.cs" />
@@ -239,20 +227,6 @@
     <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602232357516_InitialCreate.resx">
-      <DependentUpon>201602232357516_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602240022225_Initial.resx">
-      <DependentUpon>201602240022225_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602240027193_AddVirtualOnForeignFields.resx">
-      <DependentUpon>201602240027193_AddVirtualOnForeignFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602240036255_AddVirtualOnForeignFieldsOnAll.resx">
-      <DependentUpon>201602240036255_AddVirtualOnForeignFieldsOnAll.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\HttpRequest\HttpRequest.csproj">
       <Project>{66ca53e1-0a57-43e7-b011-cd62049eff17}</Project>
       <Name>HttpRequest</Name>
@@ -261,6 +235,11 @@
       <Project>{464a4762-4f4c-4a17-be25-7c7e99602720}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603021849218_Init.resx">
+      <DependentUpon>201603021849218_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

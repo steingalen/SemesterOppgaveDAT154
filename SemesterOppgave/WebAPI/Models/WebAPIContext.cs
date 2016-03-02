@@ -14,6 +14,8 @@ namespace WebAPI.Models
     
         public WebAPIContext() : base("name=WebAPIContext")
         {
+
+            Database.SetInitializer<Models.WebAPIContext>(null);
         }
 
         public System.Data.Entity.DbSet<Customer> Customers { get; set; }

@@ -1,8 +1,9 @@
 namespace WebAPI.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -74,7 +75,7 @@ namespace WebAPI.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Size = c.Int(nullable: false),
+                        Size = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -85,7 +86,7 @@ namespace WebAPI.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         RoomId = c.Int(nullable: false),
                         TaskTypeId = c.Int(nullable: false),
-                        Status = c.Int(nullable: false),
+                        Status = c.String(),
                         Comments = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
