@@ -48,38 +48,37 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Room.RoomNumber}" Header="Room Number"/>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Start, StringFormat='dd/MM/yyyy'}" Header="Start Date"/>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Slutt, StringFormat='dd/MM/yyyy'}" Header="End Date"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Start, StringFormat='dd MM yyyy'}" Header="Start Date"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Slutt, StringFormat='dd MM yyyy'}" Header="End Date"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button Command="{Binding NewReservation}" x:Name="reservNewResrvButton" Content="New Reservation" HorizontalAlignment="Left" Margin="15,518,0,0" VerticalAlignment="Top" Width="105"
-                            IsEnabled="{Binding ActiveCustomer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Button Command="{Binding NewReservation}" x:Name="reservNewResrvButton" Content="New Reservation" HorizontalAlignment="Left" Margin="15,518,0,0" VerticalAlignment="Top" Width="105"/>
                     </Grid>
                 </ContentControl>
                 
                 <ContentControl Name="Reservation" IsEnabled="{Binding SelectedItems.Count, ElementName=ListView}">
                     <Grid>
                         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="202" Margin="466,282,0,0" VerticalAlignment="Top" Width="253">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="60*"/>
-                                <RowDefinition Height="7*"/>
-                            </Grid.RowDefinitions>
-                            <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding ActiveReservation.Room.RoomNumber}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
-                            <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60*"/>
+                                    <RowDefinition Height="7*"/>
+                                </Grid.RowDefinitions>
+                                <Label x:Name="reservActiveReservationHeader" Content="Selected Reservation" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="reservRoomNumberLabel" Content="Room Number:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="reservRoomNumber" IsReadOnly="True" Text="{Binding ActiveReservation.Room.RoomNumber}" HorizontalAlignment="Left" Height="23" Margin="96,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+                                <Button x:Name="reservRoomNumberButton" Content="Find Room" HorizontalAlignment="Left" Margin="165,4,0,0" VerticalAlignment="Top" Width="76" Click="findRoomClick"
                                     Command="{Binding OpenRoomSearch}"/>
-                            <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
-                            <DatePicker Text="{Binding ActiveReservation.Start, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186" SelectedDateFormat="Long"/>
-                            <DatePicker Text="{Binding ActiveReservation.Slutt, StringFormat='dd MM yyyy'}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186" SelectedDateFormat="Long"/>
-                            <Button x:Name="reservConfirmReservation" Content="Confirm Reservation" HorizontalAlignment="Left" Margin="0,31,0,-32" VerticalAlignment="Top" Width="120"
+                                <Label x:Name="label" Content="From:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label1" Content="To:" HorizontalAlignment="Left" Margin="12,116,0,0" VerticalAlignment="Top"/>
+                                <DatePicker Name="DatePicker1" SelectedDate="{Binding ActiveReservation.Start}" HorizontalAlignment="Left" Margin="55,87,0,0" VerticalAlignment="Top" Width="186"/>
+                                <DatePicker Name="DatePicker2" SelectedDate="{Binding ActiveReservation.Slutt}" HorizontalAlignment="Left" Margin="55,118,0,0" VerticalAlignment="Top" Width="186"/>
+                                <Button x:Name="reservConfirmReservation" Content="Confirm Reservation" HorizontalAlignment="Left" Margin="0,31,0,-32" VerticalAlignment="Top" Width="120"
                                     Command="{Binding UpdateCreateReservation}" RenderTransformOrigin="-1.908,9.955" Grid.Row="1"/>
-                            <Button x:Name="reservCancelReservation" Content="Delete Reservation" HorizontalAlignment="Left" Margin="125,31,0,-32" VerticalAlignment="Top" Width="116"
+                                <Button x:Name="reservCancelReservation" Content="Delete Reservation" HorizontalAlignment="Left" Margin="125,31,0,-32" VerticalAlignment="Top" Width="116"
                                     Command="{Binding DeleteReservation}" Grid.Row="1"/>
-                        </Grid>
+                            </Grid>
                         </Border>
                     </Grid>
                 </ContentControl>

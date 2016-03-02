@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,7 +31,7 @@ namespace HotelManagementDesktop
         {
             InitializeComponent();
 
-            DataContext = viewModel;         
+            DataContext = viewModel;
         }
 
         private void findRoomClick(object sender, RoutedEventArgs e)
