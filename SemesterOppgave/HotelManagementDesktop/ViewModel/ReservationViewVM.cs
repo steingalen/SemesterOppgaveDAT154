@@ -155,8 +155,12 @@ namespace HotelManagementDesktop.ViewModel
             if (ActiveCustomer == null)
                 return;
 
+            if(Reservations == null)
+                Reservations = new ObservableCollection<ReservationVM>();
+
             ReservationVM newReservation = new ReservationVM(ActiveCustomer);
             Reservations.Add(newReservation);
+            ActiveReservation = newReservation;
         }
 
         async void updateReservations()
@@ -169,9 +173,7 @@ namespace HotelManagementDesktop.ViewModel
             List<ReservationDTO> reservationsList = JsonSerializer<ReservationDTO>.DeSerializeAsList(reservationsString);
 
             if (reservationsList.Count != 0)
-            {
                 ReservationsFound = true;
-            }
             else
                 ReservationsNotFound = true;
 
@@ -391,6 +393,10 @@ namespace HotelManagementDesktop.ViewModel
             ActiveReservation.Room = ActiveRoom;
             ActiveReservation.Start = ActiveStartDate.AddTicks(0);
             ActiveReservation.Slutt = ActiveEndDate.AddTicks(0);
+
+            // Clear room list since we're exiting
+            Rooms = null;
+            RoomsFound = false;
         }
 
         private async void startRoomSearch()
@@ -402,7 +408,7 @@ namespace HotelManagementDesktop.ViewModel
                 ActiveRoomQuality.Id + "/" + ActiveRoomBeds.Id + "/" +
                 ActiveRoomSize.Id + "/" + ActiveStartDate.ToString("yyyy-MM-dd") + "/" +
                 ActiveEndDate.ToString("yyyy-MM-dd"));
-            Console.WriteLine(ActiveStartDate.ToString("yyyy-MM-dd"));
+            
             List<Room> roomList = null;
 
             if(roomsString.Length != 0)

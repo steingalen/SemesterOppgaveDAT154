@@ -51,5 +51,50 @@ namespace HotelManagementDesktop
             RoomPicker.IsEnabled = false;
             RoomPicker.Visibility = Visibility.Hidden;
         }
+
+        private void fromReservationToTaskViewClick(object sender, RoutedEventArgs e)
+        { // Technically room picker
+            RoomPicker.IsEnabled = false;
+            RoomPicker.Visibility = Visibility.Hidden;
+
+            RoomTasks.IsEnabled = true;
+            RoomTasks.Visibility = Visibility.Visible;
+        }
+
+        private void reservationToMainMenuClick(object sender, RoutedEventArgs e)
+        {
+            Reservations.IsEnabled = false;
+            Reservations.Visibility = Visibility.Hidden;
+
+            MainMenu.IsEnabled = true;
+            MainMenu.Visibility = Visibility.Visible;
+        }
+
+        private void mainMenuToReservationsClick(object sender, RoutedEventArgs e)
+        {
+            Reservations.IsEnabled = true;
+            Reservations.Visibility = Visibility.Visible;
+
+            MainMenu.IsEnabled = false;
+            MainMenu.Visibility = Visibility.Hidden;
+        }
+
+        private void mainMenuToTaskView(object sender, RoutedEventArgs e)
+        {
+            MainMenu.IsEnabled = false;
+            MainMenu.Visibility = Visibility.Hidden;
+
+            RoomTasks.IsEnabled = true;
+            RoomTasks.Visibility = Visibility.Visible;
+        }
+
+        private void taskViewToMainMenu(object sender, RoutedEventArgs e)
+        {
+            MainMenu.IsEnabled = true;
+            MainMenu.Visibility = Visibility.Visible;
+
+            RoomTasks.IsEnabled = false;
+            RoomTasks.Visibility = Visibility.Hidden;
+        }
     }
 }

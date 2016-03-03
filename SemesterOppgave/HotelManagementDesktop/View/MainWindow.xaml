@@ -10,14 +10,15 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
-        <ContentControl Name="MainMenu" Visibility="Hidden" IsEnabled="True">
+        <ContentControl Name="MainMenu" Visibility="Hidden" IsEnabled="False">
             <Grid>
-                <Button x:Name="mainTasksButton" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75"/>
-                <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
+                <Button x:Name="mainTasksButton" Command="{Binding MainMenuToTaskView}" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75" Click="mainMenuToTaskView"/>
+                <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Click="mainMenuToReservationsClick"/>
+                <Label x:Name="label8" Content="Hotel Management" HorizontalAlignment="Left" Margin="308,52,0,0" VerticalAlignment="Top"/>
             </Grid>
         </ContentControl>
 
-        <ContentControl Name="Reservations" Visibility="Hidden" IsEnabled="True" DataContext="{Binding ReservationVM}">
+        <ContentControl Name="Reservations" Visibility="Hidden" IsEnabled="False" DataContext="{Binding ReservationVM}">
             <Grid>
                 <ContentControl Name="CustomerSearch">
                     <Grid>
@@ -82,16 +83,19 @@
                         </Border>
                     </Grid>
                 </ContentControl>
+                
+                <Button x:Name="reservBackToMainMenu" Content="Main Menu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="reservationToMainMenuClick"/>
+
             </Grid>
         </ContentControl>
 
-        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="True">
+        <ContentControl Name="RoomTasks" Visibility="Visible" IsEnabled="True">
             <Grid>
 
             </Grid>
         </ContentControl>
 
-        <ContentControl Name="RoomPicker" Visibility="Visible" IsEnabled="True" DataContext="{Binding ReservationVM}">
+        <ContentControl Name="RoomPicker" Visibility="Hidden" IsEnabled="False" DataContext="{Binding ReservationVM}">
             <Grid>
                 <ContentControl Name="SearchField" IsEnabled="{Binding AttributesFound}">
                     <Grid>
@@ -114,16 +118,20 @@
                 <Label x:Name="attributesSearchingLabel" Visibility="{Binding AttributeSearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Loading Attributes..." HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="attributesNotFoundLabel" Visibility="{Binding AttributesNotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Attributes Not Found" HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
                 
-                <ListView x:Name="RoomListView" ItemsSource="{Binding Rooms}" IsEnabled="{Binding RoomsFound}" HorizontalAlignment="Left" Height="205" Margin="36,257,0,0" VerticalAlignment="Top" Width="547">
+                <ListView x:Name="RoomListView" SelectedItem="{Binding ActiveRoom}"  ItemsSource="{Binding Rooms}" IsEnabled="{Binding RoomsFound}" HorizontalAlignment="Left" Height="205" Margin="36,257,0,0" VerticalAlignment="Top" Width="307">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RoomNumber}" Header="Room Number"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RoomQuality.Quality}" Header="Quality"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RoomSize.Size}" Header="Size"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RoomBeds.Id, Mode=OneWay}" Header="Beds"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
                 
                 <Button x:Name="SelectRoomButton" Content="Select Room" Command="{Binding SelectRoom}" IsEnabled="{Binding SelectedItems.Count, ElementName=RoomListView}" HorizontalAlignment="Left" Margin="36,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
                 <Button x:Name="CancelRoomSelect" Content="Cancel" HorizontalAlignment="Left" Margin="141,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
+                <Button x:Name="CheckRoomTasks" Command="{Binding DataContext.ReservationViewToTaskView, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding SelectedItem.RoomNumber, ElementName=RoomListView}" Content="Check Room Tasks" HorizontalAlignment="Left" Margin="432,302,0,0" VerticalAlignment="Top" Width="136" Height="46" IsEnabled="{Binding SelectedItems.Count, ElementName=RoomListView}" Click="fromReservationToTaskViewClick"/>
             </Grid>
         </ContentControl>
     </Grid>
