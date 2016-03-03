@@ -83,6 +83,7 @@
     <Compile Include="ViewModel\DesktopVM.cs" />
     <Compile Include="ViewModel\ReservationViewVM.cs" />
     <Compile Include="ViewModel\ReservationVM.cs" />
+    <Compile Include="ViewModel\TaskViewVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
