@@ -51,10 +51,10 @@ namespace Models.ViewModels
         #region Task Status helpers
         public bool TaskNew
         {
-            get { return Status.Contains("new"); }
+            get { return Status.Contains("New"); }
             set
             {
-                _roomTask.Status = "new";
+                _roomTask.Status = "New";
                 NotifyPropertyChanged();
                 NotifyPropertyChanged("TaskFinished");
                 NotifyPropertyChanged("TaskInProgress");
@@ -64,10 +64,10 @@ namespace Models.ViewModels
 
         public bool TaskInProgress
         {
-            get { return Status.Contains("in progress"); }
+            get { return Status.Contains("In progress"); }
             set
             {
-                _roomTask.Status = "in progress";
+                _roomTask.Status = "In progress";
                 NotifyPropertyChanged();
                 NotifyPropertyChanged("TaskNew");
                 NotifyPropertyChanged("TaskFinished");
@@ -77,10 +77,10 @@ namespace Models.ViewModels
         
         public bool TaskFinished
         {
-            get { return Status.Contains("finished"); }
+            get { return Status.Contains("Finished"); }
             set
             {
-                _roomTask.Status = "finished";
+                _roomTask.Status = "Finished";
                 NotifyPropertyChanged();
                 NotifyPropertyChanged("TaskInProgress");
                 NotifyPropertyChanged("TaskNew");

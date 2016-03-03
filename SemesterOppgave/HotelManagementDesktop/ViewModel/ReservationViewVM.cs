@@ -213,7 +213,7 @@ namespace HotelManagementDesktop.ViewModel
             RoomTask newCleaningJob = new RoomTask()
             {
                 RoomId = ActiveReservation.Room.RoomNumber,
-                Status = "new",
+                Status = "New",
                 TaskTypeId = 3
             };
 
