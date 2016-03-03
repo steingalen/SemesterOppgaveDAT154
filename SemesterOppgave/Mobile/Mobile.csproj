@@ -80,15 +80,15 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Page Include="ItemPage.xaml">
+    <Page Include="Pages\SingleRoomTaskPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PivotPage.xaml">
+    <Page Include="Pages\ListOfRoomTasksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RoomTaskControl.xaml">
+    <Page Include="Controls\RoomTaskControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -97,27 +97,25 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseePropertyChanged.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="DataModel\SingleRoomViewModel.cs" />
     <Compile Include="DataModel\TaskTypeVM.cs" />
-    <Compile Include="ItemPage.xaml.cs">
-      <DependentUpon>ItemPage.xaml</DependentUpon>
+    <Compile Include="Pages\SingleRoomTaskPage.xaml.cs">
+      <DependentUpon>SingleRoomTaskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PivotPage.xaml.cs">
-      <DependentUpon>PivotPage.xaml</DependentUpon>
+    <Compile Include="Pages\ListOfRoomTasksPage.xaml.cs">
+      <DependentUpon>ListOfRoomTasksPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoomTaskControl.xaml.cs">
+    <Compile Include="Controls\RoomTaskControl.xaml.cs">
       <DependentUpon>RoomTaskControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RoomTasksVM.cs" />
-    <Compile Include="RoomTaskVM.cs" />
-    <Compile Include="ViewModel.cs" />
+    <Compile Include="DataModel\RoomTasksVM.cs" />
+    <Compile Include="DataModel\RoomTaskViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -140,7 +138,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModel\SampleData.json" />
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>

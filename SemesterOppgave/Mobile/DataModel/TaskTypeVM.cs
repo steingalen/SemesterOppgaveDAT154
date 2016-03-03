@@ -30,19 +30,11 @@ namespace Mobile.DataModel
             return id;
         }
 
-        public string GetTaskTypeBasedOnTaskType(int id)
-        {
-            var type = "";
-
-            foreach (var taskType in Items)
-            {
-                if (taskType.Id == id)
-                    type = taskType.Type;
-            }
-
-            return type;
-        }
-
+        /// <summary>
+        /// Fetches roomtasks from webservice based on the task type
+        /// </summary>
+        /// <param name="taskType"></param>
+        /// <returns></returns>
         public async Task<List<RoomTask>> GetRoomTasksBasedOnTaskType(string taskType) {
 
             var taskTypeId = GetTaskTypeIdBasedOnTaskType(taskType);

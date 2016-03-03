@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using HttpRequest;
 using Models;
+using Models.ViewModels;
 
 namespace Mobile
 {
@@ -13,21 +10,18 @@ namespace Mobile
     {
         public RoomTasksVM(int taskType)
         {
-            Items = new ObservableCollection<RoomTaskVM>();
+            Items = new ObservableCollection<RoomTaskViewModel>();
             _taskType = taskType;
 
         }
 
-        public ObservableCollection<RoomTaskVM> Items { get; set; }
-        private readonly int _taskType;
-        private RoomTask _activeRoomTask;
-        public RoomTask ActiveRoomTask {
-            get { return _activeRoomTask; }
-            set {
-                _activeRoomTask = value;
-                OnPropertyChanged(nameof(ActiveRoomTask));
-            }
+        private ObservableCollection<RoomTaskViewModel> _items;
+
+        public ObservableCollection<RoomTaskViewModel> Items {
+            get { return _items; }
+            set { _items = value; NotifyPropertyChanged(nameof(Items)); }
         }
+        private readonly int _taskType;
 
         public async Task Populate()
         {
@@ -41,7 +35,7 @@ namespace Mobile
             }
 
             foreach (var roomTask in tasks) {
-                Items.Add(new RoomTaskVM(roomTask, type));
+                Items.Add(new RoomTaskViewModel(roomTask, type));
             }
         }
     }

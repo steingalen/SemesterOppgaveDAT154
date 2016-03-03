@@ -61,10 +61,10 @@ namespace WebAPI.Migrations
             );
        
             context.RoomTasks.AddOrUpdate(x => x.Id,
-                new RoomTask() { Id = 0, RoomId = 0, TaskTypeId = 2, Comments = "", Status = "new"},
-                new RoomTask() { Id = 1, RoomId = 2, TaskTypeId = 2, Comments = "Filty filty room......", Status = "in progress"},
-                new RoomTask() { Id = 2, RoomId = 1, TaskTypeId = 0, Comments = "Wants a burger", Status = "new"},
-                new RoomTask() { Id = 3, RoomId = 1, TaskTypeId = 1, Comments = "Needs a new lightbulb.", Status = "new"}
+                new RoomTask() { Id = 0, RoomId = 0, TaskTypeId = 2, Comments = "", Status = "New" },
+                new RoomTask() { Id = 1, RoomId = 2, TaskTypeId = 2, Comments = "Filty filty room......", Status = "In progress"},
+                new RoomTask() { Id = 2, RoomId = 1, TaskTypeId = 0, Comments = "Wants a burger", Status = "New"},
+                new RoomTask() { Id = 3, RoomId = 1, TaskTypeId = 1, Comments = "Needs a new lightbulb.", Status = "New" }
             );
 
             context.Reservations.AddOrUpdate(x => x.Id,

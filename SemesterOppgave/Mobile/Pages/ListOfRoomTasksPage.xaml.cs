@@ -1,28 +1,25 @@
 ﻿using Mobile.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using HttpRequest;
-using Mobile.Data;
 using Mobile.DataModel;
-using Models;
+
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
 namespace Mobile
 {
-    public sealed partial class PivotPage : Page
+    public sealed partial class ListOfRoomTasksPage : Page
     {
         private const string FirstGroupName = "TaskTypes";
         private const string SecondGroupName = "RoomTasks";
 
         private readonly NavigationHelper _navigationHelper;
         private readonly ResourceLoader _resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+        private bool _hasLoaded = false;
 
-        public PivotPage()
+        public ListOfRoomTasksPage()
         {
             this.InitializeComponent();
 
@@ -57,9 +54,18 @@ namespace Mobile
         /// a dictionary of state preserved by this page during an earlier
         /// session. The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadRoles(object sender, LoadStateEventArgs e) {
+
+            // Checks if the content has already been loaded
+            if (_hasLoaded)
+                return;
+
+            _hasLoaded = true;
+
+            // Fetches all the taskTypes
             var taskTypeVm = new TaskTypeVM();
             await taskTypeVm.Populate();
             DefaultViewModel[FirstGroupName] = taskTypeVm;
+
 
             var roomTasks = new RoomTasksVM(taskTypeVm.Items[0].Id);
             await roomTasks.Populate();
@@ -70,13 +76,9 @@ namespace Mobile
                 var pi = new PivotItem {Header = taskTypeVm.Items[index].Type};
 
                 if (index == 0) {
-                    var v = DefaultViewModel[SecondGroupName] as RoomTasksVM;
-                    {
-                        
-                        var customControl = new RoomTaskControl(v);
+                        var customControl = new RoomTaskControl(roomTasks);
                         pi.Content = customControl;
                         customControl.TaskClickedEvent += OpenTaskEvent;
-                    }
                 }
 
                 PivotControl.Items.Add(pi);
@@ -84,21 +86,30 @@ namespace Mobile
             PivotControl.SelectionChanged += ChooseRole;
         }
 
+        /// <summary>
+        /// Event is called each time a roomtask is clicked in the listview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenTaskEvent(object sender, ItemClickEventArgs e)
         {
-            var task = e.ClickedItem as RoomTaskVM;
+            var task = e.ClickedItem as RoomTaskViewModel;
 
             if (task == null)
                 return;
             
-            if (!Frame.Navigate(typeof(ItemPage), task))
+            if (!Frame.Navigate(typeof(SingleRoomTaskPage), task))
             {
                 throw new Exception(this._resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
 
         }
 
-        // Skjer hver gang man navigerer til en ny piviotItem
+        /// <summary>
+        /// Event get's called each time the user chooses a role (Maintenence, Cleaning or Room service)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void ChooseRole(object sender, RoutedEventArgs e) {
             var piviot = PivotControl.SelectedItem as PivotItem;
             

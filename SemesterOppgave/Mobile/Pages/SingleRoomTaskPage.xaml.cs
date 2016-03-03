@@ -1,10 +1,8 @@
 ﻿using Mobile.Common;
-using Mobile.Data;
 using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Models;
+using Mobile.DataModel;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -13,13 +11,13 @@ namespace Mobile
     /// <summary>
     /// A page that displays details for a single item within a group.
     /// </summary>
-    public sealed partial class ItemPage : Page
+    public sealed partial class SingleRoomTaskPage : Page
     {
         private readonly NavigationHelper _navigationHelper;
-        private readonly ObservableDictionary _defaultViewModel = new ObservableDictionary();
-        private RoomTaskVM _testModel;
+        //private readonly ObservableDictionary _defaultViewModel = new ObservableDictionary();
+        private readonly SingleRoomViewModel _defaultViewModel = new SingleRoomViewModel();
 
-        public ItemPage()
+        public SingleRoomTaskPage()
         {
             this.InitializeComponent();
             this._navigationHelper = new NavigationHelper(this);
@@ -38,9 +36,13 @@ namespace Mobile
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this._defaultViewModel; }
+       // public ObservableDictionary DefaultViewModel
+      //  {
+        //    get { return this._defaultViewModel; }
+        //}
+
+        public SingleRoomViewModel DefaultViewModel {
+            get { return _defaultViewModel; }
         }
 
         /// <summary>
@@ -56,11 +58,12 @@ namespace Mobile
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: Create an appropriate data model for your problem domain to replace the sample data.
-            var task = e.NavigationParameter as RoomTaskVM;
+            var task = e.NavigationParameter as RoomTaskViewModel;
             if (task == null)
                 return;
-            this.DefaultViewModel["Item"] = task;
+            _defaultViewModel.RoomTaskViewModel = task;
+
+            // this.DefaultViewModel["RoomTask"] = task;
         }
 
         #region NavigationHelper registration
@@ -83,8 +86,7 @@ namespace Mobile
             this._navigationHelper.OnNavigatedTo(e);
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
+        protected override void OnNavigatedFrom(NavigationEventArgs e) {
             this._navigationHelper.OnNavigatedFrom(e);
         }
 
