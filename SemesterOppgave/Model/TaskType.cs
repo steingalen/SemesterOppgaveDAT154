@@ -6,7 +6,8 @@ namespace Models {
     {
         [DataMember]
         public int Id { get; set; }
+
         [DataMember]
-        public string Type { get; set; }
+        public string Type { get; set; } = "";
     }
 }

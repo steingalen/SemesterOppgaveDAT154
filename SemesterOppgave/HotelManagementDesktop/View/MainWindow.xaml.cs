@@ -96,5 +96,14 @@ namespace HotelManagementDesktop
             RoomTasks.IsEnabled = false;
             RoomTasks.Visibility = Visibility.Hidden;
         }
+
+        private void taskViewToReservation(object sender, RoutedEventArgs e)
+        {
+            RoomPicker.IsEnabled = true;
+            RoomPicker.Visibility = Visibility.Visible;
+
+            RoomTasks.IsEnabled = false;
+            RoomTasks.Visibility = Visibility.Hidden;
+        }
     }
 }

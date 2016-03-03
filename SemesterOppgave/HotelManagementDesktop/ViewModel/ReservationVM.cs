@@ -85,6 +85,7 @@ namespace HotelManagementDesktop.ViewModel
 
                 if (Room != null)
                 {
+                    _reservation.RoomId = Room.Room.Id;
                     _reservation.Room = Room.Room;
 
                     await ApiRequests.Put(ApiUrl.RESERVATIONS, _reservation.Id,

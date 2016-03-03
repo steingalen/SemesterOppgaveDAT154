@@ -10,7 +10,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
-        <ContentControl Name="MainMenu" Visibility="Hidden" IsEnabled="False">
+        <ContentControl Name="MainMenu" Visibility="Visible" IsEnabled="True">
             <Grid>
                 <Button x:Name="mainTasksButton" Command="{Binding MainMenuToTaskView}" Content="Room Tasks" HorizontalAlignment="Left" Margin="100,137,0,0" VerticalAlignment="Top" Width="75" Click="mainMenuToTaskView"/>
                 <Button x:Name="mainReservationsButton" Content="Reservations" Margin="0,137,100,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Click="mainMenuToReservationsClick"/>
@@ -83,14 +83,62 @@
                         </Border>
                     </Grid>
                 </ContentControl>
-                
+
                 <Button x:Name="reservBackToMainMenu" Content="Main Menu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="reservationToMainMenuClick"/>
 
             </Grid>
         </ContentControl>
 
-        <ContentControl Name="RoomTasks" Visibility="Visible" IsEnabled="True">
+        <ContentControl Name="RoomTasks" Visibility="Hidden" IsEnabled="False" DataContext="{Binding TaskViewVM}">
             <Grid>
+                <ContentControl Name="RoomTasksSearch">
+                    <Grid>
+                        <TextBlock Margin="15,67,0,0" Text="Room Number" Foreground="LightSteelBlue" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                               Height="23" Width="228" Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=roomNumberSearchBox}" />
+                        <TextBox x:Name="roomNumberSearchBox" Text="{Binding RoomNumber, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotFromReservation}" HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Background="Transparent"/>
+                        <Button x:Name="roomTaskSearch" Content="Find Tasks" Command="{Binding StartSearch}" IsEnabled="{Binding NotFromReservation}" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="102"/>
+                        <Label x:Name="roomTaskSearchInProgress" Visibility="{Binding SearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Searching..." HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="roomTaskNotFound" Visibility="{Binding NotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Could not find any tasks" HorizontalAlignment="Left" Margin="243,67,0,0" VerticalAlignment="Top"/>
+                    </Grid>
+                </ContentControl>
+
+                <ContentControl Name="TaskSearchList">
+                    <Grid>
+
+                        <ListView x:Name="taskList" SelectedItem="{Binding ActiveRoomTask}" ItemsSource="{Binding RoomTasks}" HorizontalAlignment="Left" Height="271" Margin="33,179,0,0" VerticalAlignment="Top" Width="298">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Type.Type}" Header="Task Type" Width="150"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" Width="100"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label x:Name="label9" Content="Tasks:" HorizontalAlignment="Left" Margin="33,148,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="addNewTaskButton" Command="{Binding NewRoomTask}" Content="New Task" HorizontalAlignment="Left" Margin="33,468,0,0" VerticalAlignment="Top" Width="90"/>
+
+                    </Grid>
+                </ContentControl>
+
+                <ContentControl Name="ActiveTask" IsEnabled="{Binding SelectedItems.Count, ElementName=taskList}">
+                    <Grid>
+                        <Label x:Name="label10" Content="Task Type:" HorizontalAlignment="Left" Margin="473,152,0,0" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="comboBox" SelectedItem="{Binding ActiveRoomTask.Type, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Type" ItemsSource="{Binding TaskTypes}" HorizontalAlignment="Left" Margin="558,156,0,0" VerticalAlignment="Top" Width="120"/>
+
+                        <Label x:Name="label11" Content="Status:" HorizontalAlignment="Left" Margin="473,207,0,0" VerticalAlignment="Top"/>
+                        <RadioButton x:Name="radioButton1" IsChecked="{Binding ActiveRoomTask.TaskNew}" Content="New" HorizontalAlignment="Left" Margin="540,212,0,0" VerticalAlignment="Top"/>
+                        <RadioButton x:Name="radioButton2" IsChecked="{Binding ActiveRoomTask.TaskInProgress}" Content="In Progress" HorizontalAlignment="Left" Margin="540,230,0,0" VerticalAlignment="Top"/>
+                        <RadioButton x:Name="radioButton3" IsChecked="{Binding ActiveRoomTask.TaskFinished}" Content="Finished" HorizontalAlignment="Left" Margin="540,248,0,0" VerticalAlignment="Top"/>
+
+                        <Label x:Name="label11_Copy" Content="Comments:" HorizontalAlignment="Left" Margin="473,285,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="textBlock" Text="{Binding ActiveRoomTask.Comments}" HorizontalAlignment="Left" Margin="558,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="66" Width="140"/>
+
+                        <Button x:Name="taskSave" Command="{Binding UpdateCreateRoomTask}" Content="Confirm Task" HorizontalAlignment="Left" Margin="473,379,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button x:Name="taskDelete" Command="{Binding DeleteRoomTask}" Content="Delete Task" HorizontalAlignment="Left" Margin="572,379,0,0" VerticalAlignment="Top" Width="75"/>
+                    </Grid>
+                </ContentControl>
+
+                <Button x:Name="taskViewBackToMainMenu" Visibility="{Binding NotFromReservation, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Main Menu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="taskViewToMainMenu"/>
+                <Button x:Name="taskViewBackToReservation" Visibility="{Binding FromReservation, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Back To Reservations" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="123" Click="taskViewToReservation"/>
 
             </Grid>
         </ContentControl>
@@ -117,7 +165,7 @@
 
                 <Label x:Name="attributesSearchingLabel" Visibility="{Binding AttributeSearchInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Loading Attributes..." HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="attributesNotFoundLabel" Visibility="{Binding AttributesNotFound, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Attributes Not Found" HorizontalAlignment="Left" Margin="292,181,0,0" VerticalAlignment="Top"/>
-                
+
                 <ListView x:Name="RoomListView" SelectedItem="{Binding ActiveRoom}"  ItemsSource="{Binding Rooms}" IsEnabled="{Binding RoomsFound}" HorizontalAlignment="Left" Height="205" Margin="36,257,0,0" VerticalAlignment="Top" Width="307">
                     <ListView.View>
                         <GridView>
@@ -128,7 +176,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                
+
                 <Button x:Name="SelectRoomButton" Content="Select Room" Command="{Binding SelectRoom}" IsEnabled="{Binding SelectedItems.Count, ElementName=RoomListView}" HorizontalAlignment="Left" Margin="36,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
                 <Button x:Name="CancelRoomSelect" Content="Cancel" HorizontalAlignment="Left" Margin="141,497,0,0" VerticalAlignment="Top" Width="76" Click="selectRoomClick"/>
                 <Button x:Name="CheckRoomTasks" Command="{Binding DataContext.ReservationViewToTaskView, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding SelectedItem.RoomNumber, ElementName=RoomListView}" Content="Check Room Tasks" HorizontalAlignment="Left" Margin="432,302,0,0" VerticalAlignment="Top" Width="136" Height="46" IsEnabled="{Binding SelectedItems.Count, ElementName=RoomListView}" Click="fromReservationToTaskViewClick"/>

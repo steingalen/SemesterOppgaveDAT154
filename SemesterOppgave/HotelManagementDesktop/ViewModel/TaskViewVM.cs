@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Documents;
 using HttpRequest;
 using Models;
@@ -36,6 +37,15 @@ namespace HotelManagementDesktop.ViewModel
             set { _roomTasks = value; NotifyPropertyChanged(); }
         }
 
+        private ObservableCollection<TaskTypeVM> _taskTypes;
+        public ObservableCollection<TaskTypeVM> TaskTypes
+        {
+            get
+            {
+                return _taskTypes; }
+            set { _taskTypes = value; NotifyPropertyChanged(); }
+        }
+
         #endregion
 
         #region EntryStatus
@@ -56,6 +66,27 @@ namespace HotelManagementDesktop.ViewModel
         #endregion
 
         #region SearchState
+
+        bool _taskTypesSearchInProgress = false;
+        public bool TaskTypesSearchInProgress
+        {
+            get { return _taskTypesSearchInProgress; }
+            set { _taskTypesSearchInProgress = value; NotifyPropertyChanged(); }
+        }
+
+        bool _taskTypesFound = false;
+        public bool TaskTypesFound
+        {
+            get { return _taskTypesFound; }
+            set { _taskTypesFound = value; NotifyPropertyChanged(); }
+        }
+
+        bool _taskTypesNotFound = false;
+        public bool TaskTypesNotFound
+        {
+            get { return _taskTypesNotFound; }
+            set { _taskTypesNotFound = value; NotifyPropertyChanged(); }
+        }
 
         bool _searchInProgress = false;
         public bool SearchInProgress
@@ -90,6 +121,9 @@ namespace HotelManagementDesktop.ViewModel
 
             // Update list
             updateRoomTasks();
+
+            if(TaskTypes == null)
+                getRoomTaskTypes();
         }
 
         public void CameFromMainMenu()
@@ -100,6 +134,29 @@ namespace HotelManagementDesktop.ViewModel
 
             // Clear list
             RoomTasks = new ObservableCollection<RoomTaskVM>();
+
+            if (TaskTypes == null)
+                getRoomTaskTypes();
+        }
+
+        async void getRoomTaskTypes()
+        {
+            TaskTypesSearchInProgress = true;
+            TaskTypesFound = TaskTypesNotFound = false;
+
+            string json = await ApiRequests.Get(ApiUrl.TASKTYPES);
+
+            List<TaskType> taskTypesList = JsonSerializer<TaskType>.DeSerializeAsList(json);
+
+            ObservableCollection<TaskTypeVM> collection = new ObservableCollection<TaskTypeVM>();
+
+            foreach(TaskType t in taskTypesList)
+                collection.Add(new TaskTypeVM(t));
+
+            TaskTypes = collection;
+
+            TaskTypesFound = true;
+            TaskTypesSearchInProgress = false;
         }
 
         async void updateRoomTasks()
@@ -126,10 +183,37 @@ namespace HotelManagementDesktop.ViewModel
             foreach (RoomTask t in roomTaskList)
             {
                 RoomTaskVM newTask = new RoomTaskVM(t);
+                newTask.Type = TaskTypes.Where((TaskTypeVM a) => { return a.TaskType.Id == t.TaskTypeId; }).First();
                 collection.Add(newTask);
             }
 
             RoomTasks = collection;
+        }
+
+        async void updateCreateActiveRoomTask()
+        {
+            // Clear out other objects, just keep Id
+            ActiveRoomTask.RoomTask.Type = null;
+
+            if (ActiveRoomTask.RoomTask.Id != 0)// Existing reservation, update
+            {
+                await ApiRequests.Put(ApiUrl.ROOMTASKS, ActiveRoomTask.RoomTask.Id,
+                        JsonSerializer<RoomTask>.Serialize(ActiveRoomTask.RoomTask));
+            }
+            else
+            {
+                await ApiRequests.Post(ApiUrl.ROOMTASKS, JsonSerializer<RoomTask>.Serialize(ActiveRoomTask.RoomTask));
+            }
+
+            updateRoomTasks();
+        }
+
+        async void deleteActiveRoomTask()
+        {
+            if (ActiveRoomTask.RoomTask.Id != 0)
+                await ApiRequests.Delete(ApiUrl.ROOMTASKS, ActiveRoomTask.RoomTask.Id);
+
+            updateRoomTasks();
         }
 
         void addNewTask()
@@ -140,10 +224,57 @@ namespace HotelManagementDesktop.ViewModel
             if(RoomTasks == null)
                 RoomTasks = new ObservableCollection<RoomTaskVM>();
 
-            RoomTaskVM newRoomTask = new RoomTaskVM(new RoomTask());
+            RoomTask newTask = new RoomTask() {RoomId = RoomNumber};
+
+            newTask.Type = TaskTypes.First().TaskType;
+
+            RoomTaskVM newRoomTask = new RoomTaskVM(newTask);
+
+            newRoomTask.Type = TaskTypes.First();
+            newRoomTask.TaskNew = true;
 
             RoomTasks.Add(newRoomTask);
             ActiveRoomTask = newRoomTask;
+        }
+
+        #endregion
+
+        #region Commands
+
+        Command _newRoomTask;
+        public Command NewRoomTask
+        {
+            get
+            {
+                return _newRoomTask ?? (_newRoomTask = new Command(() => addNewTask(), true));
+            }
+        }
+
+        Command _deleteRoomTask;
+        public Command DeleteRoomTask
+        {
+            get
+            {
+                return _deleteRoomTask ?? (_deleteRoomTask = new Command(() => deleteActiveRoomTask(), true));
+            }
+        }
+
+        Command _startSearch;
+        public Command StartSearch
+        {
+            get
+            {
+                return _startSearch ?? (_startSearch = new Command(() => updateRoomTasks(), true));
+            }
+        }
+
+        Command _updateCreateRoomTask;
+        public Command UpdateCreateRoomTask
+        {
+            get
+            {
+                return _updateCreateRoomTask ?? (_updateCreateRoomTask = new Command(() => updateCreateActiveRoomTask(), true));
+            }
         }
 
         #endregion
