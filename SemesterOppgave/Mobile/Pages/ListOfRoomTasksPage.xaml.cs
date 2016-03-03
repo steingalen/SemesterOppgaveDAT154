@@ -61,29 +61,42 @@ namespace Mobile
 
             _hasLoaded = true;
 
-            // Fetches all the taskTypes
-            var taskTypeVm = new TaskTypeVM();
-            await taskTypeVm.Populate();
-            DefaultViewModel[FirstGroupName] = taskTypeVm;
+            try {
+                // Fetches all the taskTypes
+                var taskTypeVm = new TaskTypeVM();
+                await taskTypeVm.Populate();
+                DefaultViewModel[FirstGroupName] = taskTypeVm;
 
+                // Fetches all the roomtask based on the tasktype
+                var roomTasks = new RoomTasksVM(taskTypeVm.Items[0].Id);
+                await roomTasks.Populate();
+                DefaultViewModel[SecondGroupName] = roomTasks;
 
-            var roomTasks = new RoomTasksVM(taskTypeVm.Items[0].Id);
-            await roomTasks.Populate();
-            DefaultViewModel[SecondGroupName] = roomTasks;
+                // Creates a piviot element for each taskType
+                for (var index = 0; index < taskTypeVm.Items.Count; index++)
+                {
 
-            for (var index = 0; index < taskTypeVm.Items.Count; index++) {
-                
-                var pi = new PivotItem {Header = taskTypeVm.Items[index].Type};
+                    var pi = new PivotItem { Header = taskTypeVm.Items[index].Type };
 
-                if (index == 0) {
+                    if (index == 0)
+                    {
                         var customControl = new RoomTaskControl(roomTasks);
                         pi.Content = customControl;
                         customControl.TaskClickedEvent += OpenTaskEvent;
-                }
+                    }
 
-                PivotControl.Items.Add(pi);
+                    PivotControl.Items.Add(pi);
+                }
+                PivotControl.SelectionChanged += ChooseRole;
+
+
+            } catch (System.Runtime.Serialization.SerializationException) {
+
+                _hasLoaded = false;
             }
-            PivotControl.SelectionChanged += ChooseRole;
+           
+
+            
         }
 
         /// <summary>
@@ -116,6 +129,7 @@ namespace Mobile
             if (piviot == null)
                 return;
 
+            // PiviotItem has data
             if (piviot.Content != null) {
                 return;
             }
@@ -127,9 +141,12 @@ namespace Mobile
            
             var taskTypeId = taskTypeVm.GetTaskTypeIdBasedOnTaskType(piviot.Header.ToString());
 
+
+            // Fetches all the roomtask based on the tasktype
             var roomTasks = new RoomTasksVM(taskTypeId);
             await roomTasks.Populate();
             DefaultViewModel[SecondGroupName] = roomTasks;
+
             var customControl = new RoomTaskControl(roomTasks);
             piviot.Content = customControl;
             customControl.TaskClickedEvent += OpenTaskEvent;

@@ -23,10 +23,11 @@ namespace Mobile
         }
         private readonly int _taskType;
 
-        public async Task Populate()
-        {
-            var taskTypes = JsonSerializer<TaskType>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.TASKTYPES));
-            var tasks = JsonSerializer<RoomTask>.DeSerializeAsList(await ApiRequests.Get(ApiUrl.ROOM_TASKS_BY_TASK, _taskType));
+        public async Task Populate() {
+            var request = await ApiRequests.Get(ApiUrl.TASKTYPES);
+            var taskTypes = JsonSerializer<TaskType>.DeSerializeAsList(request);
+            var jsonFromWebService = await ApiRequests.Get(ApiUrl.ROOM_TASKS_BY_TASK, _taskType);
+            var tasks = JsonSerializer<RoomTask>.DeSerializeAsList(jsonFromWebService);
             var type = "";
 
             foreach (var taskType in taskTypes) {
