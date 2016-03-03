@@ -204,6 +204,22 @@ namespace HotelManagementDesktop.ViewModel
 
             updateReservations();
         }
+
+        async void checkout()
+        {
+            if (ActiveReservation.Room == null)
+                return;
+
+            RoomTask newCleaningJob = new RoomTask()
+            {
+                RoomId = ActiveReservation.Room.RoomNumber,
+                Status = "new",
+                TaskTypeId = 3
+            };
+
+            await ApiRequests.Post(ApiUrl.ROOMTASKS, JsonSerializer<RoomTask>.Serialize(newCleaningJob));
+        }
+
         #endregion
 
         #region Commands
@@ -231,6 +247,15 @@ namespace HotelManagementDesktop.ViewModel
             get
             {
                 return _updateCreateReservation ?? (_updateCreateReservation = new Command(() => updateCreateReservation(), true));
+            }
+        }
+
+        Command _checkout;
+        public Command Checkout
+        {
+            get
+            {
+                return _checkout ?? (_checkout = new Command(() => checkout(), true));
             }
         }
         #endregion
@@ -335,7 +360,7 @@ namespace HotelManagementDesktop.ViewModel
 
         #region Collections
 
-    ObservableCollection<RoomVM> _rooms;
+        ObservableCollection<RoomVM> _rooms;
         public ObservableCollection<RoomVM> Rooms
         {
             get
@@ -486,6 +511,12 @@ namespace HotelManagementDesktop.ViewModel
             ActiveRoomSize = anySize;
         }
 
+        private void toRoomPicker()
+        {
+            ActiveStartDate = ActiveReservation.Start.AddTicks(0);
+            ActiveEndDate = ActiveReservation.Slutt.AddTicks(0);
+        }
+
         #endregion
 
         #region Commands
@@ -505,6 +536,15 @@ namespace HotelManagementDesktop.ViewModel
             get
             {
                 return _selectRoom ?? (_selectRoom = new Command(() => selectRoom(), true));
+            }
+        }
+
+        Command _toRoomPicker;
+        public Command ToRoomPicker
+        {
+            get
+            {
+                return _toRoomPicker ?? (_toRoomPicker = new Command(() => toRoomPicker(), true));
             }
         }
 
