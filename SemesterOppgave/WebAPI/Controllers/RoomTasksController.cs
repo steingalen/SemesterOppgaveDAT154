@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var roomTasks = await db.RoomTasks.Where(task => task.TaskTypeId == id).OrderBy(t => t.Status == "new").ToListAsync();
+            var roomTasks = await db.RoomTasks.Where(task => task.TaskTypeId == id && !task.Status.Contains("Finished")).OrderByDescending(t => t.Status).ToListAsync();
             if (roomTasks == null)
             {
                 return NotFound();
