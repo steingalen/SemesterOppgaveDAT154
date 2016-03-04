@@ -86,7 +86,6 @@
                 $("#reservationSize").val(reservation.Room.Size.Size);
                 $("#reservationQuality").val(reservation.Room.Quality.Quality);
                 $("#reservationBeds").val(reservation.Room.Beds.Beds);
-                $("#price").val(reservation.Price);
 
 
                 colorRow(selectedRow, defaultRowBackgroundColor, defaultRowColor);

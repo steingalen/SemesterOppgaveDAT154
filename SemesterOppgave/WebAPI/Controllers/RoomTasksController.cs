@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
         }
 
         [ResponseType(typeof(RoomTask))]
-        [Route("api/roomtask/tasktype/{id}")]
+        [Route("api/roomtasks/tasktype/{id}")]
         public async Task<IHttpActionResult> GetRoomTasksByTaskType(int id)
         {
             var taskType = await db.TaskTypes.FirstAsync(r => r.Id == id);
